@@ -1,9 +1,8 @@
-package com.example.comp2522202330termprojectsjb7788.Characters;
+package com.example.comp2522202330termprojectsjb7788.Elements;
 
 import com.example.comp2522202330termprojectsjb7788.enums.Directions;
 import com.example.comp2522202330termprojectsjb7788.interfaces.SnowCharacter;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Player implements SnowCharacter {
@@ -35,6 +34,14 @@ public class Player implements SnowCharacter {
         return healthPoint;
     }
 
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
     public void collectSnow() {
     }
 
@@ -45,7 +52,7 @@ public class Player implements SnowCharacter {
     }
 
     public void placeSnowBomb(Pane root) {
-        Bomb bomb = new Bomb(root, player,10, 40);
+        Bomb bomb = new Bomb(root, player,10, getDamage());
         bomb.placeBomb();
         bomb.explode();
     }

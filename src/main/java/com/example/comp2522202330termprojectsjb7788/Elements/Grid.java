@@ -1,4 +1,4 @@
-package com.example.comp2522202330termprojectsjb7788.Characters;
+package com.example.comp2522202330termprojectsjb7788.Elements;
 
 public class Grid {
     public static int GRID_WIDTH = 40;

@@ -1,6 +1,6 @@
 package com.example.comp2522202330termprojectsjb7788;
 
-import com.example.comp2522202330termprojectsjb7788.Characters.Player;
+import com.example.comp2522202330termprojectsjb7788.Elements.Player;
 import com.example.comp2522202330termprojectsjb7788.enums.Directions;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -19,7 +19,7 @@ public class HelloApplication extends Application {
         Rectangle player = new Rectangle(240, 240, 40, 40);
         Rectangle berry = new Rectangle(540, 640, 25, 25);
         berry.setFill(Color.YELLOW);
-        Player player1 = new Player(player, 100, 10, 0, 0);
+        Player player1 = new Player(player, 100, 4, 0, 0);
 
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
