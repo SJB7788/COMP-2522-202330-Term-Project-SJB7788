@@ -16,29 +16,19 @@ public class HelloApplication extends Application {
         Pane root = new Pane();
         Scene scene = new Scene(root, 1280, 720);
         // add player rectangle
-        Rectangle player = new Rectangle(250, 250, 50, 50);
-        Rectangle berry = new Rectangle(550, 650, 25, 25);
+        Rectangle player = new Rectangle(240, 240, 40, 40);
+        Rectangle berry = new Rectangle(540, 640, 25, 25);
         berry.setFill(Color.YELLOW);
         Player player1 = new Player(player, 100, 10, 0, 0);
 
         scene.setOnKeyPressed(event -> {
-                switch (event.getCode()) {
-                    case W:
-                        player1.move(Directions.UP);
-                        break;
-                    case S:
-                        player1.move(Directions.DOWN);
-                        break;
-                    case D:
-                        player1.move(Directions.RIGHT);
-                        break;
-                    case A:
-                        player1.move(Directions.LEFT);
-                        break;
-                    case J:
-                        player1.placeSnowBomb(root);
-                        break;
-                }
+            switch (event.getCode()) {
+                case W -> player1.move(Directions.UP);
+                case S -> player1.move(Directions.DOWN);
+                case D -> player1.move(Directions.RIGHT);
+                case A -> player1.move(Directions.LEFT);
+                case J -> player1.placeSnowBomb(root);
+            }
         });
 
         new AnimationTimer() {

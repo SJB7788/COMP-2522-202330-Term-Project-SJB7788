@@ -7,8 +7,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Player implements SnowCharacter {
-    private final int SPEED = 15;
-    private Rectangle player;
+    private final int SPEED = 10;
+    private final Rectangle player;
     private int healthPoint;
     private int damage;
     private int snowAmount;
@@ -24,18 +24,10 @@ public class Player implements SnowCharacter {
 
     public void move(Directions direction) {
         switch (direction) {
-            case UP:
-                player.setY(player.getY() - SPEED);
-                break;
-            case DOWN:
-                player.setY(player.getY() + SPEED);
-                break;
-            case LEFT:
-                player.setX(player.getX() - SPEED);
-                break;
-            case RIGHT:
-                player.setX(player.getX() + SPEED);
-                break;
+            case UP -> player.setY(player.getY() - SPEED);
+            case DOWN -> player.setY(player.getY() + SPEED);
+            case LEFT -> player.setX(player.getX() - SPEED);
+            case RIGHT -> player.setX(player.getX() + SPEED);
         }
     }
 
@@ -53,9 +45,7 @@ public class Player implements SnowCharacter {
     }
 
     public void placeSnowBomb(Pane root) {
-        Rectangle bombRectangle = new Rectangle(player.getX(), player.getY(), 50, 50);
-        bombRectangle.setFill(Color.RED);
-        Bomb bomb = new Bomb(root, bombRectangle, 10, 50);
+        Bomb bomb = new Bomb(root, player,10, 40);
         bomb.placeBomb();
         bomb.explode();
     }
