@@ -20,10 +20,6 @@ public class Snowblock implements Block {
         block.setFill(Color.BLUE);
     }
 
-    public void placeBlock(Pane root) {
-        root.getChildren().add(block);
-    }
-
     @Override
     public int getDurability() {
         return durability;

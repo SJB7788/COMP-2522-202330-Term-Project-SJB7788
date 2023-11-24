@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -35,9 +36,12 @@ public class Bomb {
     }
 
     public void explode() {
+        // make explosion
         Explosion explosion = new Explosion(damage / 2, BOMB_SIZE, (int) bomb.getX(), (int) bomb.getY());
         explosion.makeExplosionArea();
-        ArrayList<Rectangle> explosionArray = explosion.getExplosionArray();
+
+        // get the explosion group
+        Group explosionGroup = explosion.getExplosionGroup();
 
         Timeline timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -49,25 +53,27 @@ public class Bomb {
             public void handle(Event event) {
                 timerCount++;
                 if (timerCount == 2) {
-                    for (Rectangle element : explosionArray) {
-                        root.getChildren().add(element);
-                    }
+                    // make explosion visible and remove bomb when 2 seconds has passed
+                    root.getChildren().add(explosionGroup);
+                    // check for collision with snowblocks
+                    explosion.checkCollision(Grid.snowBlocks);
                     root.getChildren().remove(bomb);
                     bomb.setY(-50);
                     bomb.setX(-50);
                 }
                 if (timerCount == 3) {
-                    for (Rectangle element : explosionArray) {
-                        root.getChildren().remove(element);
-                        element.setX(-50);
-                        element.setY(-50);
-                    }
+                    // remove explosion when 3 seconds has passed
+                    root.getChildren().remove(explosionGroup);
+                    explosionGroup.setTranslateX(-200);
+                    explosionGroup.setTranslateY(-200);
                     timeline.stop();
                 }
             }
         }));
         timeline.playFromStart();
     }
+
+
 
     public int getDamage() {
         return damage;

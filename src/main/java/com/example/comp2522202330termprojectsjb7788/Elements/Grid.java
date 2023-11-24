@@ -1,8 +1,19 @@
 package com.example.comp2522202330termprojectsjb7788.Elements;
 
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
+
 public class Grid {
     public static int GRID_WIDTH = 40;
     public static int GRID_HEIGHT = 40;
+    public static final ArrayList<Rectangle> snowBlocks = new ArrayList<>();
+
+    public Grid() {
+    }
 
     public static int getGridPlacementX(int x) {
         if (x + GRID_WIDTH >= 1280) {
@@ -25,6 +36,14 @@ public class Grid {
         }
         return y + (GRID_HEIGHT - remainderY); // return the higher bound of the grid
     }
+
+    public void setSnowblocks(Pane pane) {
+        Snowblock snowblock = new Snowblock(1, GRID_WIDTH, 200, 200, null);
+        snowBlocks.add(snowblock.getBlock());
+        pane.getChildren().add(snowblock.getBlock());
+    }
+
+
 
     public static int getGridWidth() {
         return GRID_WIDTH;
