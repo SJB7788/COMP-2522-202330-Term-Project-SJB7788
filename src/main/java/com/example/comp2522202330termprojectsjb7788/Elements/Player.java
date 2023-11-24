@@ -1,12 +1,12 @@
 package com.example.comp2522202330termprojectsjb7788.Elements;
 
+import com.example.comp2522202330termprojectsjb7788.Controller;
 import com.example.comp2522202330termprojectsjb7788.enums.Directions;
 import com.example.comp2522202330termprojectsjb7788.interfaces.SnowCharacter;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
 public class Player implements SnowCharacter {
-    private final int SPEED = 10;
     private final Rectangle player;
     private int healthPoint;
     private int damage;
@@ -22,11 +22,12 @@ public class Player implements SnowCharacter {
     }
 
     public void move(Directions direction) {
+        Controller controller = new Controller(player);
         switch (direction) {
-            case UP -> player.setY(player.getY() - SPEED);
-            case DOWN -> player.setY(player.getY() + SPEED);
-            case LEFT -> player.setX(player.getX() - SPEED);
-            case RIGHT -> player.setX(player.getX() + SPEED);
+            case UP -> controller.moveUp();
+            case DOWN -> controller.moveDown();
+            case LEFT -> controller.moveLeft();
+            case RIGHT -> controller.moveRight();
         }
     }
 
@@ -52,7 +53,7 @@ public class Player implements SnowCharacter {
     }
 
     public Bomb placeSnowBomb(Pane root) {
-        Bomb bomb = new Bomb(root, player,10, getDamage());
+        Bomb bomb = new Bomb(root, player,damage, getDamage());
         bomb.placeBomb();
         bomb.explode();
         return bomb;

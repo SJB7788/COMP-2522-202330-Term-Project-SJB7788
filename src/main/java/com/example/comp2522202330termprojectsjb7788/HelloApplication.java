@@ -19,7 +19,7 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(root, 1280, 720);
         // add player rectangle
         Rectangle player = new Rectangle(240, 240, 40, 40);
-        Player player1 = new Player(player, 100, 4, 0, 0);
+        Player player1 = new Player(player, 100, 8, 0, 0);
 
         Rectangle berry = new Rectangle(540, 640, 25, 25);
         berry.setFill(Color.YELLOW);
@@ -54,7 +54,7 @@ public class HelloApplication extends Application {
         // add rectangle to root
         root.getChildren().addAll(player, berry);
 
-        stage.setTitle("Hello!");
+        stage.setTitle("Game");
         stage.setScene(scene);
         stage.show();
     }
