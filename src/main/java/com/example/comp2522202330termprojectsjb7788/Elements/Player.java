@@ -51,10 +51,11 @@ public class Player implements SnowCharacter {
     public void rollSnow() {
     }
 
-    public void placeSnowBomb(Pane root) {
+    public Bomb placeSnowBomb(Pane root) {
         Bomb bomb = new Bomb(root, player,10, getDamage());
         bomb.placeBomb();
         bomb.explode();
+        return bomb;
     }
 
     public void chargeSnow() {
