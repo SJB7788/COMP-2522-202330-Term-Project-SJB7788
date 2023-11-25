@@ -1,6 +1,7 @@
 package com.example.comp2522202330termprojectsjb7788;
 
 import com.example.comp2522202330termprojectsjb7788.Elements.Grid;
+import com.example.comp2522202330termprojectsjb7788.Elements.Snowblock;
 import com.example.comp2522202330termprojectsjb7788.enums.Directions;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
@@ -44,13 +45,13 @@ public class Controller {
     }
 
     public void detectCollision(int x1, int x2, int y1, int y2, Directions direction) {
-        for (Rectangle snowBlock : Grid.snowBlocks) {
+        for (Snowblock snowBlock : Grid.snowBlocks) {
             // left collision x1 = 40, x2 = 0, y1 = 40, y2 = -40
             // right collision x1 = 0, x2 = -40, y1 = 40, y2 = -40
             // top collision x1 = 40, x2 = -40, y1 = 40, y2 = 0
             // bottom collision x1 = 40, x2 = -40, y1 = 0, y2 = -40
-            if (snowBlock.getX() - player.getX() < x1 && snowBlock.getX() - player.getX() > x2
-                    && snowBlock.getY() - player.getY() < y1 && snowBlock.getY() - player.getY() > y2) {
+            if (snowBlock.getBlock().getX() - player.getX() < x1 && snowBlock.getBlock().getX() - player.getX() > x2
+                    && snowBlock.getBlock().getY() - player.getY() < y1 && snowBlock.getBlock().getY() - player.getY() > y2) {
                 switch (direction) {
                     case UP -> player.setY(player.getY() + SPEED);
                     case DOWN -> player.setY(player.getY() - SPEED);

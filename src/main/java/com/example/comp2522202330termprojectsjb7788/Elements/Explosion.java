@@ -12,13 +12,15 @@ public class Explosion {
     private final int xAxis;
     private final int yAxis;
     private final Group explosionGroup;
+    private final int damage;
 
     public Explosion(int explosionRadius, int bombSize, int xAxis, int yAxis) {
         this.explosionRadius = explosionRadius;
-        this.size = bombSize - 1; // make explosion smaller than bomb
+        this.size = bombSize - 10; // make explosion smaller than bomb
         this.xAxis = (xAxis + bombSize / 2) - size / 2;
         this.yAxis = (yAxis + bombSize / 2) - size / 2;
-        explosionGroup = new Group();
+        this.explosionGroup = new Group();
+        this.damage = explosionRadius * 2;
     }
 
     public void makeExplosionArea() {
@@ -50,13 +52,11 @@ public class Explosion {
 
     }
 
-    public void checkCollision(ArrayList<Rectangle> snowBlocks) {
-        for (Rectangle snowBlock : snowBlocks) {
+    public void checkCollision(ArrayList<Snowblock> snowBlocks) {
+        for (Snowblock snowBlock : snowBlocks) {
             for (Node explosion : explosionGroup.getChildren()) {
-                if (explosion.getBoundsInParent().intersects(snowBlock.getBoundsInParent())) {
-                    System.out.println("Collision detected");
-                    snowBlock.setX(-50);
-                    snowBlock.setY(-50);
+                if (explosion.getBoundsInParent().intersects(snowBlock.getBlock().getBoundsInParent())) {
+                    snowBlock.decreaseDurability(damage);
                 }
             }
         }

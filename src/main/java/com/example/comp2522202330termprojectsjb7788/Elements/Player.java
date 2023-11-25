@@ -65,4 +65,8 @@ public class Player implements SnowCharacter {
     public void collectBerry() {
         berryAmount++;
     }
+
+    public int getBerryAmount() {
+        return berryAmount;
+    }
 }

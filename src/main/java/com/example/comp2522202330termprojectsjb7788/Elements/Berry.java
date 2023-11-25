@@ -23,13 +23,16 @@ public class Berry implements Item {
         this.size = size;
     }
 
-    public void placeBerry(Pane root) {
+    @Override
+    public void placeItem(Pane root) {
         root.getChildren().add(berry);
     }
 
     @Override
     public void useItem(SnowCharacter character) {
         character.collectBerry();
+        berry.setY(-50);
+        berry.setX(-50);
     }
 
     @Override
@@ -37,5 +40,8 @@ public class Berry implements Item {
         return itemAmount;
     }
 
+    public Rectangle getItemRect() {
+        return berry;
+    }
 
 }

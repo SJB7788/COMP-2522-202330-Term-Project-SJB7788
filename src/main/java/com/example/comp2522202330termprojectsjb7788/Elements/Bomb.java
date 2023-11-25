@@ -36,7 +36,6 @@ public class Bomb {
     }
 
     public void explode() {
-        System.out.println(damage / 2);
         // make explosion
         Explosion explosion = new Explosion(damage / 2, BOMB_SIZE, (int) bomb.getX(), (int) bomb.getY());
         explosion.makeExplosionArea();

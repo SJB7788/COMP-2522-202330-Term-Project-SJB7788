@@ -6,17 +6,18 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.Random;
-
 public class Snowblock implements Block {
-    private final int durability;
-    private final Item containsItem;
+    private int durability;
+    private Item item;
     private final Rectangle block;
+    private int xAxis;
+    private int yAxis;
 
-    public Snowblock(int durability, int size, int xAxis, int yAxis, Item containsItem) {
+    public Snowblock(int durability, int size, int xAxis, int yAxis) {
         this.durability = durability;
-        this.containsItem = containsItem;
         this.block = new Rectangle(xAxis, yAxis, size, size);
+        this.xAxis = xAxis;
+        this.yAxis = yAxis;
         block.setFill(Color.BLUE);
     }
 
@@ -26,14 +27,38 @@ public class Snowblock implements Block {
     }
 
     public boolean doesContainsItem() {
-        return containsItem != null;
+        return item != null;
     }
 
     public Item getItem() {
-        return containsItem;
+        return item;
     }
 
     public Rectangle getBlock() {
         return block;
+    }
+
+    public void decreaseDurability(int durability) {
+        this.durability -= durability;
+        if (this.durability <= 0) {
+            block.setX(-50);
+            block.setY(-50);
+            if (doesContainsItem()) {
+                item.placeItem((Pane) block.getParent());
+                System.out.println("hoh");
+            }
+        }
+    }
+
+    public void addItem(Item item) {
+        this.item = item;
+    }
+
+    public int getxAxis() {
+        return xAxis;
+    }
+
+    public int getyAxis() {
+        return yAxis;
     }
 }
