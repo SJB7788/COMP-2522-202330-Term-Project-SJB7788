@@ -4,7 +4,9 @@ import com.example.comp2522202330termprojectsjb7788.Elements.*;
 import com.example.comp2522202330termprojectsjb7788.enums.Directions;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -30,7 +32,7 @@ public class HelloApplication extends Application {
 
         new AnimationTimer() {
             @Override
-            public void handle(long l) {
+            public void handle(long timestamp) {
                 if (player.getBoundsInParent().intersects(berry.getBoundsInParent())) {
                     System.out.println("Berry collected!");
                     player1.collectBerry();
@@ -38,18 +40,37 @@ public class HelloApplication extends Application {
                     berry.setY(-50);
                     berry.setX(-50);
                 }
-
-                scene.setOnKeyPressed(event -> {
-                    switch (event.getCode()) {
-                        case W -> player1.move(Directions.UP);
-                        case S -> player1.move(Directions.DOWN);
-                        case D -> player1.move(Directions.RIGHT);
-                        case A -> player1.move(Directions.LEFT);
-                        case J -> { player1.placeSnowBomb(root); }
-                    }
-                });
             }
         }.start();
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                switch (keyEvent.getCode()) {
+                    case W -> {
+                        player1.move(Directions.UP);
+                    }
+                    case S -> player1.move(Directions.DOWN);
+                    case D -> player1.move(Directions.RIGHT);
+                    case A -> player1.move(Directions.LEFT);
+                    case J -> { player1.placeSnowBomb(root); }
+                }
+            }
+        });
+
+//        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+//            @Override
+//            public void handle(KeyEvent keyEvent) {
+//                switch (keyEvent.getCode()) {
+//                    case W -> {
+//                        player1.move(Directions.UP);
+//                    }
+//                    case S -> player1.move(Directions.DOWN);
+//                    case D -> player1.move(Directions.RIGHT);
+//                    case A -> player1.move(Directions.LEFT);
+//                }
+//            }
+//        });
 
         // add rectangle to root
         root.getChildren().addAll(player, berry);

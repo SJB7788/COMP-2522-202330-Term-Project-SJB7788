@@ -39,8 +39,12 @@ public class Grid {
 
     public void setSnowblocks(Pane pane) {
         Snowblock snowblock = new Snowblock(1, GRID_WIDTH, 200, 200, null);
+        Snowblock snowblock2 = new Snowblock(1, GRID_WIDTH, 240, 200, null);
+        Snowblock snowblock3 = new Snowblock(1, GRID_WIDTH, 280, 200, null);
         snowBlocks.add(snowblock.getBlock());
-        pane.getChildren().add(snowblock.getBlock());
+        snowBlocks.add(snowblock2.getBlock());
+        snowBlocks.add(snowblock3.getBlock());
+        pane.getChildren().addAll(snowblock.getBlock(), snowblock2.getBlock(), snowblock3.getBlock());
     }
 
 

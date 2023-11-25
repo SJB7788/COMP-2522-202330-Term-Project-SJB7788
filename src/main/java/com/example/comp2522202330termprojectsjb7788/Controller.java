@@ -1,114 +1,64 @@
 package com.example.comp2522202330termprojectsjb7788;
 
 import com.example.comp2522202330termprojectsjb7788.Elements.Grid;
+import com.example.comp2522202330termprojectsjb7788.enums.Directions;
+import javafx.animation.Animation;
+import javafx.animation.AnimationTimer;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.shape.Rectangle;
 
 public class Controller {
     private final Rectangle player;
     private final int SPEED = 10;
+    final double minX = 0;
+    final double maxX = 800;
+    final DoubleProperty rectangleVelocity = new SimpleDoubleProperty();
+    final LongProperty lastUpdateTime = new SimpleLongProperty();
 
     public Controller(Rectangle player) {
         this.player = player;
     }
+
+
     public void moveUp() {
         player.setY(player.getY() - SPEED);
-        detectCollisionBottom();
+        detectCollision(40, -40, 0, -40, Directions.UP);
     }
 
     public void moveDown() {
         player.setY(player.getY() + SPEED);
-        detectCollisionTop();
+        detectCollision(40, -40, 40, 0, Directions.DOWN);
     }
 
     public void moveLeft() {
         player.setX(player.getX() - SPEED);
-        detectCollisionRight();
+        detectCollision(0, -40, 40, -40, Directions.LEFT);
     }
 
     public void moveRight() {
         player.setX(player.getX() + SPEED);
-        detectCollisionLeft();
+        detectCollision(40, 0, 40, -40, Directions.RIGHT);
     }
 
-    public void detectCollisionLeft() {
+    public void detectCollision(int x1, int x2, int y1, int y2, Directions direction) {
         for (Rectangle snowBlock : Grid.snowBlocks) {
-            // left collision
-            if (snowBlock.getX() - player.getX() < 40 && snowBlock.getX() - player.getX() > 0
-                    && snowBlock.getY() - player.getY() < 40 && snowBlock.getY() - player.getY() > -40) {
-                player.setX(player.getX() - SPEED);
-                System.out.println("Left collision");
+            // left collision x1 = 40, x2 = 0, y1 = 40, y2 = -40
+            // right collision x1 = 0, x2 = -40, y1 = 40, y2 = -40
+            // top collision x1 = 40, x2 = -40, y1 = 40, y2 = 0
+            // bottom collision x1 = 40, x2 = -40, y1 = 0, y2 = -40
+            if (snowBlock.getX() - player.getX() < x1 && snowBlock.getX() - player.getX() > x2
+                    && snowBlock.getY() - player.getY() < y1 && snowBlock.getY() - player.getY() > y2) {
+                switch (direction) {
+                    case UP -> player.setY(player.getY() + SPEED);
+                    case DOWN -> player.setY(player.getY() - SPEED);
+                    case LEFT -> player.setX(player.getX() + SPEED);
+                    case RIGHT -> player.setX(player.getX() - SPEED);
+                }
                 return;
             }
         }
     }
-
-    public void detectCollisionRight() {
-        for (Rectangle snowBlock : Grid.snowBlocks) {
-            // right collision
-            if (snowBlock.getX() - player.getX() < 0 && snowBlock.getX() - player.getX() > -40
-                    && snowBlock.getY() - player.getY() < 40 && snowBlock.getY() - player.getY() > -40) {
-                player.setX(player.getX() + SPEED);
-                System.out.println("Right collision");
-                return;
-            }
-        }
-    }
-
-    public void detectCollisionTop() {
-        for (Rectangle snowBlock : Grid.snowBlocks) {
-            // top collision
-            if (snowBlock.getX() - player.getX() < 40 && snowBlock.getX() - player.getX() > -40
-                    && snowBlock.getY() - player.getY() < 40 && snowBlock.getY() - player.getY() > 0) {
-                player.setY(player.getY() - SPEED);
-                System.out.println("Top collision");
-                return;
-            }
-        }
-    }
-
-    public void detectCollisionBottom() {
-        for (Rectangle snowBlock : Grid.snowBlocks) {
-            // bottom collision
-            if (snowBlock.getX() - player.getX() < 40 && snowBlock.getX() - player.getX() > -40
-                    && snowBlock.getY() - player.getY() < 0 && snowBlock.getY() - player.getY() > -40) {
-                player.setY(player.getY() + SPEED);
-                System.out.println("Bottom collision");
-                return;
-            }
-        }
-    }
-
-//    public void detectCollision() {
-//        for (Rectangle snowBlock : Grid.snowBlocks) {
-//            // left collision
-//            if (snowBlock.getX() - player.getX() < 40 && snowBlock.getX() - player.getX() > 0
-//                && snowBlock.getY() - player.getY() < 30 && snowBlock.getY() - player.getY() > -30) {
-//                player.setX(player.getX() - SPEED);
-//                System.out.println("Left collision");
-//                return;
-//            }
-//            // right collision
-//            if (snowBlock.getX() - player.getX() < 0 && snowBlock.getX() - player.getX() > -40
-//                    && snowBlock.getY() - player.getY() < 30 && snowBlock.getY() - player.getY() > -30) {
-//                player.setX(player.getX() + SPEED);
-//                System.out.println("Right collision");
-//                return;
-//            }
-//            // top collision
-//            if (snowBlock.getX() - player.getX() < 30 && snowBlock.getX() - player.getX() > -30
-//                    && snowBlock.getY() - player.getY() < 40 && snowBlock.getY() - player.getY() > 0) {
-//                player.setY(player.getY() - SPEED);
-//                System.out.println("Top collision");
-//                return;
-//            }
-//            // bottom collision
-//            if (snowBlock.getX() - player.getX() < 30 && snowBlock.getX() - player.getX() > -30
-//                    && snowBlock.getY() - player.getY() < 0 && snowBlock.getY() - player.getY() > -40) {
-//                player.setY(player.getY() + SPEED);
-//                System.out.println("Bottom collision");
-//                return;
-//            }
-//
-//        }
-//    }
 }
