@@ -25,11 +25,16 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(root, 1280, 720);
         scene.setFill(Color.GRAY);
         // add player rectangle
-        Rectangle player = new Rectangle(240, 240, 40, 40);
+        Rectangle player = new Rectangle(40, 40, 40, 40);
         Player playerObj = new Player(player, 100, 8, 0, 0);
 
         Grid grid = new Grid();
-        grid.setSnowblocks();
+
+        //load maps
+        Map map = new Map("./maps/map 1.txt");
+        map.loadMap();
+
+        grid.placeStoneBlocks(root);
         grid.placeSnowBlocks(root);
 
         Text score = new Text();

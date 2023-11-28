@@ -45,7 +45,6 @@ public class Snowblock implements Block {
             block.setY(-50);
             if (doesContainsItem()) {
                 item.placeItem((Pane) block.getParent());
-                System.out.println("hoh");
             }
         }
     }

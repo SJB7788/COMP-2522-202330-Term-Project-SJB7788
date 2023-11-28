@@ -3,6 +3,7 @@ package com.example.comp2522202330termprojectsjb7788;
 import com.example.comp2522202330termprojectsjb7788.Elements.Grid;
 import com.example.comp2522202330termprojectsjb7788.Elements.Snowblock;
 import com.example.comp2522202330termprojectsjb7788.enums.Directions;
+import com.example.comp2522202330termprojectsjb7788.interfaces.Block;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.DoubleProperty;
@@ -45,7 +46,7 @@ public class Controller {
     }
 
     public void detectCollision(int x1, int x2, int y1, int y2, Directions direction) {
-        for (Snowblock snowBlock : Grid.snowBlocks) {
+        for (Block snowBlock : Grid.blocks) {
             // left collision x1 = 40, x2 = 0, y1 = 40, y2 = -40
             // right collision x1 = 0, x2 = -40, y1 = 40, y2 = -40
             // top collision x1 = 40, x2 = -40, y1 = 40, y2 = 0
