@@ -1,10 +1,7 @@
 package com.example.comp2522202330termprojectsjb7788.Elements;
 
 import com.example.comp2522202330termprojectsjb7788.interfaces.Block;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,6 +12,7 @@ public class Grid {
     public static final ArrayList<Block> blocks = new ArrayList<>();
     public static final ArrayList<Snowblock> snowBlocks = new ArrayList<>();
     public static final ArrayList<Stoneblock> stoneBlocks = new ArrayList<>();
+    public static final ArrayList<Finishblock> finishBlocks = new ArrayList<>();
     public static final ArrayList<Map> maps = new ArrayList<>();
 
     public Grid() {
@@ -42,7 +40,7 @@ public class Grid {
         return y + (GRID_HEIGHT - remainderY); // return the higher bound of the grid
     }
 
-    public static void setSnowblocks(int yAxis, int xAxis) {
+    public static void setSnowBlocks(int yAxis, int xAxis) {
         Snowblock snowblock = new Snowblock(1, GRID_WIDTH, xAxis, yAxis);
 
         // randomly place items
@@ -55,8 +53,8 @@ public class Grid {
             // berries will most likely be in another method where it will randomly choose blocks with no items
             // and place them there instead of this like to make sure that the amount of berries in the game
             // is the amount needed to win
-            Berry berry = new Berry(1, snowblock.getxAxis() + ((GRID_WIDTH - 30) / 2),
-                    snowblock.getyAxis() + ((GRID_WIDTH - 30) / 2), 30);
+            Berry berry = new Berry(1, snowblock.getXAxis() + ((GRID_WIDTH - 30) / 2),
+                    snowblock.getYAxis() + ((GRID_WIDTH - 30) / 2), 30);
             snowblock.addItem(berry);
             System.out.println("added item");
         }
@@ -69,7 +67,7 @@ public class Grid {
         }
     }
 
-    public static void setStoneblocks(int yAxis, int xAxis) {
+    public static void setStoneBlocks(int yAxis, int xAxis) {
         Stoneblock stoneblock = new Stoneblock(GRID_WIDTH, xAxis, yAxis);
         stoneBlocks.add(stoneblock);
     }
@@ -80,6 +78,16 @@ public class Grid {
         }
     }
 
+    public static void setFinishBlocks(int yAxis, int xAxis) {
+        Finishblock finishblock = new Finishblock(GRID_WIDTH, xAxis, yAxis);
+        finishBlocks.add(finishblock);
+    }
+
+    public void placeFinishBlocks(Pane pane) {
+        for (Finishblock finishblock : finishBlocks) {
+            pane.getChildren().add(finishblock.getBlock());
+        }
+    }
 
     public static int getGridWidth() {
         return GRID_WIDTH;

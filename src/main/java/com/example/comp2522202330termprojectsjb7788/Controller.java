@@ -12,6 +12,8 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.shape.Rectangle;
 
+import java.util.Objects;
+
 public class Controller {
     private final Rectangle player;
     private final int SPEED = 10;
@@ -23,7 +25,6 @@ public class Controller {
     public Controller(Rectangle player) {
         this.player = player;
     }
-
 
     public void moveUp() {
         player.setY(player.getY() - SPEED);
@@ -51,7 +52,7 @@ public class Controller {
             // right collision x1 = 0, x2 = -40, y1 = 40, y2 = -40
             // top collision x1 = 40, x2 = -40, y1 = 40, y2 = 0
             // bottom collision x1 = 40, x2 = -40, y1 = 0, y2 = -40
-            if (snowBlock.getBlock().getX() - player.getX() < x1 && snowBlock.getBlock().getX() - player.getX() > x2
+            if (!Objects.equals(snowBlock.getBlockType(), "Finishblock") && snowBlock.getBlock().getX() - player.getX() < x1 && snowBlock.getBlock().getX() - player.getX() > x2
                     && snowBlock.getBlock().getY() - player.getY() < y1 && snowBlock.getBlock().getY() - player.getY() > y2) {
                 switch (direction) {
                     case UP -> player.setY(player.getY() + SPEED);

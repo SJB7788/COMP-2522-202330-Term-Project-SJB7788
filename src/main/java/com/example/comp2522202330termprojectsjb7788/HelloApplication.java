@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class HelloApplication extends Application {
+    private boolean isAtFinishBlock = false;
+
     @Override
     public void start(Stage stage) {
         Pane root = new Pane();
@@ -37,13 +39,21 @@ public class HelloApplication extends Application {
 
         grid.placeStoneBlocks(root);
         grid.placeSnowBlocks(root);
+        grid.placeFinishBlocks(root);
 
         Text score = new Text();
         score.setX(10);
         score.setY(25);
         score.setText("Berries Collected: 0");
         score.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        score.setFill(Color.WHITE);
 
+        playerObj.collectBerry();
+        playerObj.collectBerry();
+        playerObj.collectBerry();
+        playerObj.collectBerry();
+        playerObj.collectBerry();
+        playerObj.collectBerry();
         new AnimationTimer() {
             int scoreCount = 0;
             @Override
@@ -60,13 +70,22 @@ public class HelloApplication extends Application {
                 }
 
                 if (playerObj.getBerryAmount() >= 6) {
-                    Text winner = new Text();
-                    winner.setText("YOU WIN!");
-                    winner.setFont(Font.font("Arial", FontWeight.BOLD, 100));
-                    winner.setX(root.getWidth() / 2 - 100 * 2);
-                    winner.setY(root.getHeight() / 2);
-                    root.getChildren().add(winner);
-                    this.stop();
+                    player.setFill(Color.GREEN);
+                    for (Finishblock finishblock : Grid.finishBlocks) {
+                        finishblock.showFinishBlock();
+                        if (player.getBoundsInParent().intersects(finishblock.getBlock().getBoundsInParent())) {
+                            isAtFinishBlock = true;
+//                            Text winner = new Text();
+////                            winner.setText("YOU WIN!");
+////                            winner.setFont(Font.font("Arial", FontWeight.BOLD, 100));
+////                            winner.setX(root.getWidth() / 2 - 100 * 2);
+////                            winner.setY(root.getHeight() / 2);
+////                            root.getChildren().add(winner);
+                        }
+                        else {
+                            isAtFinishBlock = false;
+                        }
+                    }
                 }
             }
         }.start();
@@ -82,6 +101,13 @@ public class HelloApplication extends Application {
                     case D -> playerObj.move(Directions.RIGHT);
                     case A -> playerObj.move(Directions.LEFT);
                     case J -> { playerObj.placeSnowBomb(root); }
+                    case L -> {
+                        System.out.println(isAtFinishBlock);
+                        if (isAtFinishBlock) {
+                            System.out.println("hello");
+                            playerObj.chargeSnow(root);
+                        }
+                    }
                 }
             }
         });

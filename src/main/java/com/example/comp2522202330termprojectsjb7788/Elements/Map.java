@@ -42,12 +42,17 @@ public class Map {
     public void loadMap() {
         for (int currHeight = 0; currHeight < HEIGHT; currHeight++) {
             for (int currWidth = 0; currWidth < WIDTH; currWidth++) {
+                if (map[currHeight][currWidth] == 3) {
+                    System.out.println("finish block");
+                    Grid.setFinishBlocks(currHeight * Grid.GRID_HEIGHT, currWidth * Grid.GRID_WIDTH);
+                    Grid.blocks.add(Grid.finishBlocks.get(Grid.finishBlocks.size() - 1));
+                }
                 if (map[currHeight][currWidth] == 2) {
-                    Grid.setSnowblocks(currHeight * Grid.GRID_HEIGHT, currWidth * Grid.GRID_WIDTH);
+                    Grid.setSnowBlocks(currHeight * Grid.GRID_HEIGHT, currWidth * Grid.GRID_WIDTH);
                     Grid.blocks.add(Grid.snowBlocks.get(Grid.snowBlocks.size() - 1));
                 }
                 else if (map[currHeight][currWidth] == 1) {
-                    Grid.setStoneblocks(currHeight * Grid.GRID_HEIGHT, currWidth * Grid.GRID_WIDTH);
+                    Grid.setStoneBlocks(currHeight * Grid.GRID_HEIGHT, currWidth * Grid.GRID_WIDTH);
                     Grid.blocks.add(Grid.stoneBlocks.get(Grid.stoneBlocks.size() - 1));
                 }
             }

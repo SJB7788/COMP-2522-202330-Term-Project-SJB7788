@@ -4,5 +4,5 @@ import javafx.scene.shape.Rectangle;
 
 public interface Block {
     Rectangle getBlock();
-    int getDurability();
+    String getBlockType();
 }

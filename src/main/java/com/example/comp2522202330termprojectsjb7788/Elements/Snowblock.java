@@ -20,12 +20,6 @@ public class Snowblock implements Block {
         this.yAxis = yAxis;
         block.setFill(Color.BLUE);
     }
-
-    @Override
-    public int getDurability() {
-        return durability;
-    }
-
     public boolean doesContainsItem() {
         return item != null;
     }
@@ -34,8 +28,14 @@ public class Snowblock implements Block {
         return item;
     }
 
+    @Override
     public Rectangle getBlock() {
         return block;
+    }
+
+    @Override
+    public String getBlockType() {
+        return "Snowblock";
     }
 
     public void decreaseDurability(int durability) {
@@ -53,11 +53,15 @@ public class Snowblock implements Block {
         this.item = item;
     }
 
-    public int getxAxis() {
+    public int getXAxis() {
         return xAxis;
     }
 
-    public int getyAxis() {
+    public int getYAxis() {
         return yAxis;
+    }
+
+    public int getDurability() {
+        return durability;
     }
 }

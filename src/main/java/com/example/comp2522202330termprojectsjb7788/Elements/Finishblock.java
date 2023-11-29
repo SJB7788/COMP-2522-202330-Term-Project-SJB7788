@@ -1,21 +1,21 @@
 package com.example.comp2522202330termprojectsjb7788.Elements;
 
 import com.example.comp2522202330termprojectsjb7788.interfaces.Block;
-import com.example.comp2522202330termprojectsjb7788.interfaces.Item;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Stoneblock implements Block {
-    private final int durability = 100;
+public class Finishblock implements Block {
     private final Rectangle block;
+    private boolean isShown;
     private final int xAxis;
     private final int yAxis;
 
-    public Stoneblock(int size, int xAxis, int yAxis) {
+    Finishblock(int size, int xAxis, int yAxis) {
         this.block = new Rectangle(xAxis, yAxis, size, size);
         this.xAxis = xAxis;
         this.yAxis = yAxis;
-        block.setFill(Color.BLACK);
+        this.isShown = false;
+        block.setFill(Color.ANTIQUEWHITE);
     }
 
     @Override
@@ -25,7 +25,16 @@ public class Stoneblock implements Block {
 
     @Override
     public String getBlockType() {
-        return "Stoneblock";
+        return "Finishblock";
+    }
+
+    public void showFinishBlock() {
+        block.setFill(Color.GOLD);
+        this.isShown = true;
+    }
+
+    public boolean isShown() {
+        return isShown;
     }
 
     public int getXAxis() {
