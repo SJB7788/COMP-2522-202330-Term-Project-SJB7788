@@ -23,10 +23,11 @@ public class HelloApplication extends Application {
     public void start(Stage stage) {
         Pane root = new Pane();
         Scene scene = new Scene(root, 1280, 720);
-        scene.setFill(Color.GRAY);
+        scene.setFill(Color.ANTIQUEWHITE);
         // add player rectangle
         Rectangle player = new Rectangle(40, 40, 40, 40);
-        Player playerObj = new Player(player, 100, 8, 0, 0);
+        player.setFill(Color.YELLOW);
+        Player playerObj = new Player(player, 10, 4, 0, 0);
 
         Grid grid = new Grid();
 

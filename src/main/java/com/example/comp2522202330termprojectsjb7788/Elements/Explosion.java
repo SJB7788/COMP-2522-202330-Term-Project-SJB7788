@@ -27,37 +27,41 @@ public class Explosion {
         Rectangle initialExplosion = new Rectangle(xAxis, yAxis, size, size);
         explosionGroup.getChildren().add(initialExplosion);
 
-        int fillInRandomGap = 0;
+        // left side of the explosion
+        Rectangle explosionXRIGHT = new Rectangle(xAxis + size, yAxis,
+                ((size + 10) * ((double) explosionRadius)), size);
 
-        for (int xIndex = 1; xIndex <= explosionRadius / 2; xIndex++) {
-            // left side of the explosion
-            Rectangle explosionXLEFT = new Rectangle(xAxis + (size * xIndex) - fillInRandomGap, yAxis,
-                    size, size);
-            // right side of the explosion
-            Rectangle explosionXRIGHT = new Rectangle(xAxis - (size * xIndex) + fillInRandomGap, yAxis,
-                    size, size);
-            explosionGroup.getChildren().addAll(explosionXLEFT, explosionXRIGHT);
-        }
+        // right side of the explosion
+        Rectangle explosionXLEFT = new Rectangle(xAxis - ((size + 10) * ((double) explosionRadius)), yAxis,
+                ((size + 10) * ((double) explosionRadius)), size);
+        explosionGroup.getChildren().addAll(explosionXLEFT, explosionXRIGHT);
 
-        // add explosion for the X axis explosions
-        for (int yIndex = 1; yIndex <= explosionRadius / 2; yIndex++) {
-            // top side of the explosion
-            Rectangle explosionYDOWN = new Rectangle(xAxis, yAxis + (size * yIndex) - fillInRandomGap,
-                    size, size);
-            // bottom side of the explosion
-            Rectangle explosionYUP = new Rectangle(xAxis, yAxis - (size * yIndex) + fillInRandomGap,
-                    size, size);
-            explosionGroup.getChildren().addAll(explosionYDOWN, explosionYUP);
-        }
+        // top side of the explosion
+        Rectangle explosionYDOWN = new Rectangle(xAxis, yAxis + size,
+                size, ((size + 10) * ((double) explosionRadius)));
+
+        // bottom side of the explosion
+        Rectangle explosionYUP = new Rectangle(xAxis, yAxis - ((size + 10) * ((double) explosionRadius)),
+                size, ((size + 10) * ((double) explosionRadius)));
+        explosionGroup.getChildren().addAll(explosionYDOWN, explosionYUP);
 
     }
 
-    public void checkCollision(ArrayList<Snowblock> snowBlocks) {
+    public void checkCollisionBlock(ArrayList<Snowblock> snowBlocks) {
         for (Snowblock snowBlock : snowBlocks) {
             for (Node explosion : explosionGroup.getChildren()) {
                 if (explosion.getBoundsInParent().intersects(snowBlock.getBlock().getBoundsInParent())) {
                     snowBlock.decreaseDurability(damage);
                 }
+            }
+        }
+    }
+
+    public void checkCollisionPlayer(Player player) {
+        for (Node explosion : explosionGroup.getChildren()) {
+            if (explosion.getBoundsInParent().intersects(player.getPlayer().getBoundsInParent())) {
+                player.setHealth(player.getHealth() - damage);
+                System.out.println(player.getHealth());
             }
         }
     }

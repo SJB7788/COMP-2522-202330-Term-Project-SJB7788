@@ -10,17 +10,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-
 public class Bomb {
     private final static int BOMB_SIZE = 40;
     private final Pane root;
-    private final Rectangle player;
+    private final Player player;
     private Rectangle bomb;
     private final int damage;
     private final int explosionRadius;
 
-    public Bomb(Pane root, Rectangle player, int damage, int explosionRadius) {
+    public Bomb(Pane root, Player player, int damage, int explosionRadius) {
         this.damage = damage;
         this.explosionRadius = explosionRadius;
         this.root = root;
@@ -28,8 +26,8 @@ public class Bomb {
     }
 
     public void placeBomb() {
-        int bombX = Grid.getGridPlacementX((int) player.getX());
-        int bombY = Grid.getGridPlacementY((int) player.getY());
+        int bombX = Grid.getGridPlacementX((int) player.getPlayer().getX());
+        int bombY = Grid.getGridPlacementY((int) player.getPlayer().getY());
         bomb = new Rectangle(bombX, bombY, 40, 40);
         bomb.setFill(Color.RED);
         root.getChildren().add(bomb);
@@ -56,7 +54,8 @@ public class Bomb {
                     // make explosion visible and remove bomb when 2 seconds has passed
                     root.getChildren().add(explosionGroup);
                     // check for collision with snowblocks
-                    explosion.checkCollision(Grid.snowBlocks);
+                    explosion.checkCollisionBlock(Grid.snowBlocks);
+                    explosion.checkCollisionPlayer(player);
                     root.getChildren().remove(bomb);
                     bomb.setY(-50);
                     bomb.setX(-50);
@@ -72,8 +71,6 @@ public class Bomb {
         }));
         timeline.playFromStart();
     }
-
-
 
     public int getDamage() {
         return damage;

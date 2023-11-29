@@ -30,15 +30,6 @@ public class Player implements SnowCharacter {
             case RIGHT -> controller.moveRight();
         }
     }
-
-    public int getHealth() {
-        return healthPoint;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
-
     public void setDamage(int damage) {
         this.damage = damage;
     }
@@ -53,20 +44,37 @@ public class Player implements SnowCharacter {
     }
 
     public Bomb placeSnowBomb(Pane root) {
-        Bomb bomb = new Bomb(root, player,damage, getDamage());
+        Bomb bomb = new Bomb(root, this, damage, getDamage());
         bomb.placeBomb();
         bomb.explode();
         return bomb;
     }
 
     public void chargeSnow() {
+
     }
 
     public void collectBerry() {
         berryAmount++;
     }
 
+    public Rectangle getPlayer() {
+        return player;
+    }
+
     public int getBerryAmount() {
         return berryAmount;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public int getHealth() {
+        return healthPoint;
+    }
+
+    public void setHealth(int healthPoint) {
+        this.healthPoint = healthPoint;
     }
 }
