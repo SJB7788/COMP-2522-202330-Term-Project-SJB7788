@@ -37,10 +37,10 @@ public class GameLoop extends Application {
 
     public void showStartScreen() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/start-menu-alpha.fxml"));
+            FXMLLoader loader = new FXMLLoader(GameLoop.class.getResource("/com/example/comp2522202330termprojectsjb7788/start-menu-alpha.fxml"));
             Scene startScene = new Scene(loader.load(), 1280, 720);
             controller = loader.getController();
-            controller.setStageAndApplication(stage, this);
+            controller.setApplication(this);
             stage.setScene(startScene);
             stage.show();
         } catch (Exception e) {

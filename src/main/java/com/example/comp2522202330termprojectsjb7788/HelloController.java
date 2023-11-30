@@ -5,7 +5,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class HelloController {
-    private Stage stage;
     private GameLoop gameLoop;
 
     @FXML
@@ -27,8 +26,7 @@ public class HelloController {
         System.out.println("Exit");
     }
 
-    public void setStageAndApplication(Stage stage, GameLoop gameLoop) {
-        this.stage = stage;
+    public void setApplication(GameLoop gameLoop) {
         this.gameLoop = gameLoop;
     }
 }
