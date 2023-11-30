@@ -5,6 +5,7 @@ import com.example.comp2522202330termprojectsjb7788.enums.Directions;
 import com.example.comp2522202330termprojectsjb7788.interfaces.SnowCharacter;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -60,44 +61,53 @@ public class Player implements SnowCharacter {
         return bomb;
     }
 
-    public void chargeSnow(Pane root) {
+    public int chargeSnow(Pane root) {
         allowMovement = 0;
         Timeline timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler() {
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             int timerCount = 0;
+
             @Override
-            public void handle(javafx.event.Event event) {
+            public void handle(ActionEvent event) {
                 timerCount++;
-                Rectangle chargeSquareOne = new Rectangle(player.getX() - 20, player.getY() - 20, 80, 80);
+
+                Rectangle chargeSquareOne = new Rectangle(player.getX() - 60, player.getY() - 20, 160, 80);
                 chargeSquareOne.setFill(Color.LIGHTCYAN);
 
-                Rectangle chargeSquareTwo = new Rectangle(player.getX() - 140, player.getY() - 140, 320, 320);
+                Rectangle chargeSquareTwo = new Rectangle(player.getX() - 300, player.getY() - 140, 640, 320);
                 chargeSquareTwo.setFill(Color.LIGHTBLUE);
 
-                Rectangle chargeSquareThree = new Rectangle(player.getX() - 300, player.getY() - 300, 640, 640);
+                Rectangle chargeSquareThree = new Rectangle(player.getX() - 620, player.getY() - 300, 1280, 640);
                 chargeSquareThree.setFill(Color.BLUE);
 
-                if (timerCount == 1) {
-                    System.out.println("add 1");
-                    root.getChildren().add(chargeSquareOne);
-                }
-                if (timerCount == 2) {
-                    System.out.println("add 2");
-                    root.getChildren().add(chargeSquareTwo);
-                }
-                if (timerCount == 3) {
-                    System.out.println("add 3");
-                    root.getChildren().add(chargeSquareThree);
-                }
-                if (timerCount == 4) {
-                    root.getChildren().removeAll(chargeSquareOne, chargeSquareTwo, chargeSquareThree);
+                root.getChildren().addAll(chargeSquareThree, chargeSquareTwo, chargeSquareOne);
 
+                chargeSquareOne.setOpacity(0);
+                chargeSquareTwo.setOpacity(0);
+                chargeSquareThree.setOpacity(0);
+
+                if (timerCount == 1) {
+                    chargeSquareOne.setOpacity(1);
+                    player.toFront();
+                } else if (timerCount == 2) {
+                    chargeSquareTwo.setOpacity(1);
+                    player.toFront();
+                } else if (timerCount == 3) {
+                    chargeSquareThree.setOpacity(1);
+                    player.toFront();
+                } else if (timerCount == 4) {
+                    chargeSquareOne.setOpacity(0);
+                    chargeSquareTwo.setOpacity(0);
+                    chargeSquareThree.setOpacity(0);
+                    root.getChildren().removeAll(chargeSquareOne, chargeSquareTwo, chargeSquareThree);
                     timeline.stop();
                 }
             }
         }));
+
         timeline.playFromStart();
+        return 1;
     }
 
     public void collectBerry() {

@@ -8,7 +8,7 @@ public interface SnowCharacter extends Character {
     void throwSnow();
     void rollSnow();
     Bomb placeSnowBomb(Pane root);
-    void chargeSnow(Pane root);
+    int chargeSnow(Pane root);
     void collectBerry();
 
 }

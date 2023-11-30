@@ -6,6 +6,7 @@ import com.example.comp2522202330termprojectsjb7788.interfaces.Item;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -16,13 +17,47 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
+public class GameLoop extends Application {
 
-public class HelloApplication extends Application {
+    private boolean gameWon = false;
+    private boolean gameStarted = false;
     private boolean isAtFinishBlock = false;
+    private HelloController controller;
+    private Stage stage;
 
     @Override
     public void start(Stage stage) {
+        this.stage = stage;
+        showStartScreen();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+
+    public void showStartScreen() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/start-menu-alpha.fxml"));
+            Scene startScene = new Scene(loader.load(), 1280, 720);
+            controller = loader.getController();
+            controller.setStageAndApplication(stage, this);
+            stage.setScene(startScene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        new AnimationTimer() {
+            @Override
+            public void handle(long timestamp) {
+                if (gameStarted) {
+                    showGameScreen();
+                }
+            }
+        }.start();
+    }
+
+    public void showGameScreen() {
         Pane root = new Pane();
         Scene scene = new Scene(root, 1280, 720);
         scene.setFill(Color.ANTIQUEWHITE);
@@ -75,17 +110,20 @@ public class HelloApplication extends Application {
                         finishblock.showFinishBlock();
                         if (player.getBoundsInParent().intersects(finishblock.getBlock().getBoundsInParent())) {
                             isAtFinishBlock = true;
-//                            Text winner = new Text();
-////                            winner.setText("YOU WIN!");
-////                            winner.setFont(Font.font("Arial", FontWeight.BOLD, 100));
-////                            winner.setX(root.getWidth() / 2 - 100 * 2);
-////                            winner.setY(root.getHeight() / 2);
-////                            root.getChildren().add(winner);
                         }
                         else {
                             isAtFinishBlock = false;
                         }
                     }
+                }
+
+                if (gameWon) {
+                    Text winner = new Text();
+                    winner.setText("YOU WIN!");
+                    winner.setFont(Font.font("Arial", FontWeight.BOLD, 100));
+                    winner.setX(root.getWidth() / 2 - 100 * 2);
+                    winner.setY(root.getHeight() / 2);
+                    root.getChildren().add(winner);
                 }
             }
         }.start();
@@ -102,10 +140,9 @@ public class HelloApplication extends Application {
                     case A -> playerObj.move(Directions.LEFT);
                     case J -> { playerObj.placeSnowBomb(root); }
                     case L -> {
-                        System.out.println(isAtFinishBlock);
                         if (isAtFinishBlock) {
-                            System.out.println("hello");
                             playerObj.chargeSnow(root);
+                            gameWon = true;
                         }
                     }
                 }
@@ -129,12 +166,6 @@ public class HelloApplication extends Application {
         // add rectangle to root
         root.getChildren().addAll(player, score);
 
-        stage.setTitle("Game");
         stage.setScene(scene);
-        stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }

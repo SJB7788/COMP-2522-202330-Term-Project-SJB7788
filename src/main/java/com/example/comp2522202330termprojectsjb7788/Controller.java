@@ -11,6 +11,7 @@ import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 import java.util.Objects;
 
