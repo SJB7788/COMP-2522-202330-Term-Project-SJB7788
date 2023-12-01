@@ -1,7 +1,9 @@
 package com.example.comp2522202330termprojectsjb7788.Elements;
 
+import com.example.comp2522202330termprojectsjb7788.enums.Directions;
 import com.example.comp2522202330termprojectsjb7788.interfaces.Block;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,6 +17,7 @@ public class Grid {
     public static final ArrayList<Finishblock> finishBlocks = new ArrayList<>();
     public static final ArrayList<Enemy> enemies = new ArrayList<>();
     public static final ArrayList<Map> maps = new ArrayList<>();
+    public static StartingBlock startingBlock;
 
     public Grid() {
     }
@@ -96,10 +99,23 @@ public class Grid {
     }
 
     public void placeEnemyBlocks(Pane pane) {
+        Random random = new Random();
         for (Enemy enemy : enemies) {
-            System.out.println(enemy.getBody().getX() + " " + enemy.getBody().getY());
+            Directions enemyDirection = (random.nextInt(2) + 1 == 1) ? Directions.RIGHT : Directions.LEFT;
             pane.getChildren().add(enemy.getBody());
+            enemy.move(enemyDirection);
         }
+    }
+
+    public static void setStartingBlock(int xAxis, int yAxis) {
+        startingBlock = new StartingBlock(xAxis, yAxis);
+    }
+
+    public void placeStartingBlock(Pane pane) {
+        if (startingBlock == null) {
+            throw new NullPointerException("Starting block is null");
+        }
+        pane.getChildren().add(startingBlock.getBlock());
     }
 
     public static int getGridWidth() {

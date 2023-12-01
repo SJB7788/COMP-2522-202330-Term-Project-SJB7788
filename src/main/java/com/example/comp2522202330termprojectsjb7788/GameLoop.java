@@ -61,10 +61,6 @@ public class GameLoop extends Application {
         Pane root = new Pane();
         Scene scene = new Scene(root, 1280, 720);
         scene.setFill(Color.ANTIQUEWHITE);
-        // add player rectangle
-        Rectangle player = new Rectangle(40, 40, 40, 40);
-        player.setFill(Color.YELLOW);
-        Player playerObj = new Player(player, 10, 4, 0, 0);
 
         Grid grid = new Grid();
         Rectangle test = new Rectangle(640, 1160, 40, 40);
@@ -74,10 +70,16 @@ public class GameLoop extends Application {
         Map map = new Map("./maps/map 2.txt");
         map.loadMap();
 
+        grid.placeStartingBlock(root);
         grid.placeStoneBlocks(root);
         grid.placeSnowBlocks(root);
         grid.placeFinishBlocks(root);
         grid.placeEnemyBlocks(root);
+
+        // add player rectangle
+        Rectangle player = new Rectangle(Grid.startingBlock.getBlock().getX(), Grid.startingBlock.getBlock().getY(), 40, 40);
+        player.setFill(Color.YELLOW);
+        Player playerObj = new Player(player, 10, 4, 0, 0);
 
         Text score = new Text();
         score.setX(10);
@@ -89,7 +91,6 @@ public class GameLoop extends Application {
             int scoreCount = 0;
             @Override
             public void handle(long timestamp) {
-
                 for (Snowblock snowblock : Grid.snowBlocks) {
                     if (snowblock.doesContainsItem()) {
                         Item item = snowblock.getItem();
@@ -98,6 +99,13 @@ public class GameLoop extends Application {
                             scoreCount = playerObj.getBerryAmount();
                             score.setText("Berries Collected: " + scoreCount);
                         }
+                    }
+                }
+
+                for (Enemy enemy : Grid.enemies) {
+                    if (player.getX() == enemy.getBody().getX()
+                            && player.getY() - enemy.getBody().getY() < 40 && player.getY() - enemy.getBody().getY() > -40) {
+                        playerObj.setHealth(playerObj.getHealth() - enemy.getDamage());
                     }
                 }
 

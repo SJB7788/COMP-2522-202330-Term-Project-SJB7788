@@ -61,7 +61,16 @@ public class Explosion {
         for (Node explosion : explosionGroup.getChildren()) {
             if (explosion.getBoundsInParent().intersects(player.getPlayer().getBoundsInParent())) {
                 player.setHealth(player.getHealth() - damage);
-                System.out.println(player.getHealth());
+            }
+        }
+    }
+
+    public void checkCollisionEnemy(ArrayList<Enemy> enemies) {
+        for (Enemy enemy : enemies) {
+            for (Node explosion : explosionGroup.getChildren()) {
+                if (explosion.getBoundsInParent().intersects(enemy.getBody().getBoundsInParent())) {
+                    enemy.setHealthPoint(enemy.getHealthPoint() - damage);
+                }
             }
         }
     }

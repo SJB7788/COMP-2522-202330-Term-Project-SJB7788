@@ -40,10 +40,12 @@ public class Map {
     }
 
     public void loadMap() {
-        System.out.println(27 * 18);
         for (int currHeight = 0; currHeight < HEIGHT; currHeight++) {
             for (int currWidth = 0; currWidth < WIDTH; currWidth++) {
-                if (map[currHeight][currWidth] == 4) {
+                if (map[currHeight][currWidth] == 5) {
+                    Grid.setStartingBlock(currWidth * Grid.GRID_WIDTH, currHeight * Grid.GRID_HEIGHT);
+                }
+                else if (map[currHeight][currWidth] == 4) {
                     Grid.setEnemyBlocks(currWidth * Grid.GRID_WIDTH, currHeight * Grid.GRID_HEIGHT);
                 }
                 else if (map[currHeight][currWidth] == 3) {

@@ -58,6 +58,7 @@ public class Bomb implements Block {
                     // check for collision with snowblocks
                     explosion.checkCollisionBlock(Grid.snowBlocks);
                     explosion.checkCollisionPlayer(player);
+                    explosion.checkCollisionEnemy(Grid.enemies);
                     root.getChildren().remove(bomb);
                     Grid.blocks.remove(Bomb.this);
                     bomb.setY(-50);

@@ -1,17 +1,14 @@
 package com.example.comp2522202330termprojectsjb7788;
 
+import com.example.comp2522202330termprojectsjb7788.Elements.Enemy;
 import com.example.comp2522202330termprojectsjb7788.Elements.Grid;
-import com.example.comp2522202330termprojectsjb7788.Elements.Snowblock;
 import com.example.comp2522202330termprojectsjb7788.enums.Directions;
 import com.example.comp2522202330termprojectsjb7788.interfaces.Block;
-import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
 import java.util.Objects;
 
@@ -29,25 +26,25 @@ public class Controller {
 
     public void moveUp() {
         player.setY(player.getY() - SPEED);
-        detectCollision(40, -40, 0, -40, Directions.UP);
+        detectCollisionBlock(40, -40, 0, -40, Directions.UP);
     }
 
     public void moveDown() {
         player.setY(player.getY() + SPEED);
-        detectCollision(40, -40, 40, 0, Directions.DOWN);
+        detectCollisionBlock(40, -40, 40, 0, Directions.DOWN);
     }
 
     public void moveLeft() {
         player.setX(player.getX() - SPEED);
-        detectCollision(0, -40, 40, -40, Directions.LEFT);
+        detectCollisionBlock(0, -40, 40, -40, Directions.LEFT);
     }
 
     public void moveRight() {
         player.setX(player.getX() + SPEED);
-        detectCollision(40, 0, 40, -40, Directions.RIGHT);
+        detectCollisionBlock(40, 0, 40, -40, Directions.RIGHT);
     }
 
-    public void detectCollision(int x1, int x2, int y1, int y2, Directions direction) {
+    public void detectCollisionBlock(int x1, int x2, int y1, int y2, Directions direction) {
         for (Block snowBlock : Grid.blocks) {
             // left collision x1 = 40, x2 = 0, y1 = 40, y2 = -40
             // right collision x1 = 0, x2 = -40, y1 = 40, y2 = -40
@@ -63,6 +60,13 @@ public class Controller {
                 }
                 return;
             }
+        }
+    }
+
+    public void detectEnemyCollision(Enemy enemy) {
+        if (player.getX() - enemy.getBody().getX() < 40 && player.getX() - enemy.getBody().getX() > -40
+                && player.getY() - enemy.getBody().getY() < 40 && player.getY() - enemy.getBody().getY() > -40) {
+            System.out.println("IM HIT");
         }
     }
 }
