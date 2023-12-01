@@ -40,19 +40,22 @@ public class Map {
     }
 
     public void loadMap() {
+        System.out.println(27 * 18);
         for (int currHeight = 0; currHeight < HEIGHT; currHeight++) {
             for (int currWidth = 0; currWidth < WIDTH; currWidth++) {
-                if (map[currHeight][currWidth] == 3) {
-                    System.out.println("finish block");
-                    Grid.setFinishBlocks(currHeight * Grid.GRID_HEIGHT, currWidth * Grid.GRID_WIDTH);
+                if (map[currHeight][currWidth] == 4) {
+                    Grid.setEnemyBlocks(currWidth * Grid.GRID_WIDTH, currHeight * Grid.GRID_HEIGHT);
+                }
+                else if (map[currHeight][currWidth] == 3) {
+                    Grid.setFinishBlocks(currWidth * Grid.GRID_WIDTH, currHeight * Grid.GRID_HEIGHT);
                     Grid.blocks.add(Grid.finishBlocks.get(Grid.finishBlocks.size() - 1));
                 }
-                if (map[currHeight][currWidth] == 2) {
-                    Grid.setSnowBlocks(currHeight * Grid.GRID_HEIGHT, currWidth * Grid.GRID_WIDTH);
+                else if (map[currHeight][currWidth] == 2) {
+                    Grid.setSnowBlocks(currWidth * Grid.GRID_WIDTH, currHeight * Grid.GRID_HEIGHT);
                     Grid.blocks.add(Grid.snowBlocks.get(Grid.snowBlocks.size() - 1));
                 }
                 else if (map[currHeight][currWidth] == 1) {
-                    Grid.setStoneBlocks(currHeight * Grid.GRID_HEIGHT, currWidth * Grid.GRID_WIDTH);
+                    Grid.setStoneBlocks(currWidth * Grid.GRID_WIDTH, currHeight * Grid.GRID_HEIGHT);
                     Grid.blocks.add(Grid.stoneBlocks.get(Grid.stoneBlocks.size() - 1));
                 }
             }

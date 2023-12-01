@@ -37,7 +37,7 @@ public class GameLoop extends Application {
 
     public void showStartScreen() {
         try {
-            FXMLLoader loader = new FXMLLoader(GameLoop.class.getResource("/com/example/comp2522202330termprojectsjb7788/start-menu-alpha.fxml"));
+            FXMLLoader loader = new FXMLLoader(GameLoop.class.getResource("start-menu-alpha.fxml"));
             Scene startScene = new Scene(loader.load(), 1280, 720);
             controller = loader.getController();
             controller.setApplication(this);
@@ -67,14 +67,17 @@ public class GameLoop extends Application {
         Player playerObj = new Player(player, 10, 4, 0, 0);
 
         Grid grid = new Grid();
+        Rectangle test = new Rectangle(640, 1160, 40, 40);
+        test.setFill(Color.CHOCOLATE);
 
         //load maps
-        Map map = new Map("./maps/map 1.txt");
+        Map map = new Map("./maps/map 2.txt");
         map.loadMap();
 
         grid.placeStoneBlocks(root);
         grid.placeSnowBlocks(root);
         grid.placeFinishBlocks(root);
+        grid.placeEnemyBlocks(root);
 
         Text score = new Text();
         score.setX(10);
@@ -82,17 +85,11 @@ public class GameLoop extends Application {
         score.setText("Berries Collected: 0");
         score.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         score.setFill(Color.WHITE);
-
-        playerObj.collectBerry();
-        playerObj.collectBerry();
-        playerObj.collectBerry();
-        playerObj.collectBerry();
-        playerObj.collectBerry();
-        playerObj.collectBerry();
         new AnimationTimer() {
             int scoreCount = 0;
             @Override
             public void handle(long timestamp) {
+
                 for (Snowblock snowblock : Grid.snowBlocks) {
                     if (snowblock.doesContainsItem()) {
                         Item item = snowblock.getItem();
@@ -162,9 +159,10 @@ public class GameLoop extends Application {
 //                }
 //            }
 //        });
+        test.toFront();
 
         // add rectangle to root
-        root.getChildren().addAll(player, score);
+        root.getChildren().addAll(player, score, test);
 
         stage.setScene(scene);
     }

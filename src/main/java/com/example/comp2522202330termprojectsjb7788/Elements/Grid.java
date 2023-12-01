@@ -13,6 +13,7 @@ public class Grid {
     public static final ArrayList<Snowblock> snowBlocks = new ArrayList<>();
     public static final ArrayList<Stoneblock> stoneBlocks = new ArrayList<>();
     public static final ArrayList<Finishblock> finishBlocks = new ArrayList<>();
+    public static final ArrayList<Enemy> enemies = new ArrayList<>();
     public static final ArrayList<Map> maps = new ArrayList<>();
 
     public Grid() {
@@ -40,7 +41,7 @@ public class Grid {
         return y + (GRID_HEIGHT - remainderY); // return the higher bound of the grid
     }
 
-    public static void setSnowBlocks(int yAxis, int xAxis) {
+    public static void setSnowBlocks(int xAxis, int yAxis) {
         Snowblock snowblock = new Snowblock(1, GRID_WIDTH, xAxis, yAxis);
 
         // randomly place items
@@ -67,7 +68,7 @@ public class Grid {
         }
     }
 
-    public static void setStoneBlocks(int yAxis, int xAxis) {
+    public static void setStoneBlocks(int xAxis, int yAxis) {
         Stoneblock stoneblock = new Stoneblock(GRID_WIDTH, xAxis, yAxis);
         stoneBlocks.add(stoneblock);
     }
@@ -78,7 +79,7 @@ public class Grid {
         }
     }
 
-    public static void setFinishBlocks(int yAxis, int xAxis) {
+    public static void setFinishBlocks(int xAxis, int yAxis) {
         Finishblock finishblock = new Finishblock(GRID_WIDTH, xAxis, yAxis);
         finishBlocks.add(finishblock);
     }
@@ -86,6 +87,18 @@ public class Grid {
     public void placeFinishBlocks(Pane pane) {
         for (Finishblock finishblock : finishBlocks) {
             pane.getChildren().add(finishblock.getBlock());
+        }
+    }
+
+    public static void setEnemyBlocks(int xAxis, int yAxis) {
+        Enemy enemy = new Enemy(10, 10, xAxis, yAxis);
+        enemies.add(enemy);
+    }
+
+    public void placeEnemyBlocks(Pane pane) {
+        for (Enemy enemy : enemies) {
+            System.out.println(enemy.getBody().getX() + " " + enemy.getBody().getY());
+            pane.getChildren().add(enemy.getBody());
         }
     }
 

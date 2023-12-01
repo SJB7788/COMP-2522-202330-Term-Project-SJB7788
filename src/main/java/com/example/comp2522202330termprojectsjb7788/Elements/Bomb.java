@@ -1,5 +1,6 @@
 package com.example.comp2522202330termprojectsjb7788.Elements;
 
+import com.example.comp2522202330termprojectsjb7788.interfaces.Block;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
@@ -10,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-public class Bomb {
+public class Bomb implements Block {
     private final static int BOMB_SIZE = 40;
     private final Pane root;
     private final Player player;
@@ -31,6 +32,7 @@ public class Bomb {
         bomb = new Rectangle(bombX, bombY, 40, 40);
         bomb.setFill(Color.RED);
         root.getChildren().add(bomb);
+        Grid.blocks.add(this);
     }
 
     public void explode() {
@@ -57,6 +59,7 @@ public class Bomb {
                     explosion.checkCollisionBlock(Grid.snowBlocks);
                     explosion.checkCollisionPlayer(player);
                     root.getChildren().remove(bomb);
+                    Grid.blocks.remove(Bomb.this);
                     bomb.setY(-50);
                     bomb.setX(-50);
                 }
@@ -78,5 +81,15 @@ public class Bomb {
 
     public int getExplosionRadius() {
         return explosionRadius;
+    }
+
+    @Override
+    public Rectangle getBlock() {
+        return bomb;
+    }
+
+    @Override
+    public String getBlockType() {
+        return "Bomb";
     }
 }
