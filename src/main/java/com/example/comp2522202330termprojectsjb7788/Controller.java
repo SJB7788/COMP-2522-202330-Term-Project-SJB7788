@@ -14,33 +14,34 @@ import java.util.Objects;
 
 public class Controller {
     private final Rectangle player;
-    private final int SPEED = 10;
+    private int speed;
     final double minX = 0;
     final double maxX = 800;
     final DoubleProperty rectangleVelocity = new SimpleDoubleProperty();
     final LongProperty lastUpdateTime = new SimpleLongProperty();
 
-    public Controller(Rectangle player) {
+    public Controller(Rectangle player, int speed) {
         this.player = player;
+        this.speed = speed;
     }
 
     public void moveUp() {
-        player.setY(player.getY() - SPEED);
+        player.setY(player.getY() - speed);
         detectCollisionBlock(40, -40, 0, -40, Directions.UP);
     }
 
     public void moveDown() {
-        player.setY(player.getY() + SPEED);
+        player.setY(player.getY() + speed);
         detectCollisionBlock(40, -40, 40, 0, Directions.DOWN);
     }
 
     public void moveLeft() {
-        player.setX(player.getX() - SPEED);
+        player.setX(player.getX() - speed);
         detectCollisionBlock(0, -40, 40, -40, Directions.LEFT);
     }
 
     public void moveRight() {
-        player.setX(player.getX() + SPEED);
+        player.setX(player.getX() + speed);
         detectCollisionBlock(40, 0, 40, -40, Directions.RIGHT);
     }
 
@@ -50,15 +51,16 @@ public class Controller {
             // right collision x1 = 0, x2 = -40, y1 = 40, y2 = -40
             // top collision x1 = 40, x2 = -40, y1 = 40, y2 = 0
             // bottom collision x1 = 40, x2 = -40, y1 = 0, y2 = -40
-            if (!Objects.equals(snowBlock.getBlockType(), "Finishblock") && snowBlock.getBlock().getX() - player.getX() < x1 && snowBlock.getBlock().getX() - player.getX() > x2
-                    && snowBlock.getBlock().getY() - player.getY() < y1 && snowBlock.getBlock().getY() - player.getY() > y2) {
+            if (!Objects.equals(snowBlock.getBlockType(), "Finishblock")
+                    && snowBlock.getBlock().getX() - player.getX() < x1 && snowBlock.getBlock().getX() - player.getX() > x2
+                    && snowBlock.getBlock().getY() - player.getY() < y1 && snowBlock.getBlock().getY() - player.getY() > y2
+                    && player.getX() >= 0 && player.getX() <= 1280 && player.getY() >= 0 && player.getY() <= 720) {
                 switch (direction) {
-                    case UP -> player.setY(player.getY() + SPEED);
-                    case DOWN -> player.setY(player.getY() - SPEED);
-                    case LEFT -> player.setX(player.getX() + SPEED);
-                    case RIGHT -> player.setX(player.getX() - SPEED);
+                    case UP -> player.setY(player.getY() + speed);
+                    case DOWN -> player.setY(player.getY() - speed);
+                    case LEFT -> player.setX(player.getX() + speed);
+                    case RIGHT -> player.setX(player.getX() - speed);
                 }
-                return;
             }
         }
     }
@@ -68,5 +70,9 @@ public class Controller {
                 && player.getY() - enemy.getBody().getY() < 40 && player.getY() - enemy.getBody().getY() > -40) {
             System.out.println("IM HIT");
         }
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 }

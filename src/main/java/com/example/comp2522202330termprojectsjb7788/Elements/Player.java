@@ -16,9 +16,13 @@ public class Player implements SnowCharacter {
     private final Rectangle player;
     private int healthPoint;
     private int damage;
+    private int speed;
+    private final int[] speedArray;
+    private int speedIndex;
     private int snowAmount;
     private int berryAmount;
     private int allowMovement;
+    private Controller controller;
 
     public Player(Rectangle player, int healthPoint, int damage, int snowAmount, int berryAmount) {
         this.player = player;
@@ -27,10 +31,13 @@ public class Player implements SnowCharacter {
         this.snowAmount = snowAmount;
         this.berryAmount = berryAmount;
         this.allowMovement = 1;
+        speedIndex = 0;
+        speedArray = new int[]{8, 10, 20};
+        this.speed = speedArray[speedIndex];
+        controller = new Controller(player, speed);
     }
 
     public void move(Directions direction) {
-        Controller controller = new Controller(player);
         if (allowMovement == 1) {
             switch (direction) {
                 case UP -> controller.moveUp();
@@ -41,9 +48,25 @@ public class Player implements SnowCharacter {
         }
     }
 
+    public int getDamage() {
+        return damage;
+    }
     public void setDamage(int damage) {
         this.damage = damage;
     }
+
+    public int getSpeed() {
+        return speed;
+    }
+    public void setSpeed(int speed) {
+        if (speedIndex < 2) {
+            speedIndex++;
+            this.speed = speedArray[speedIndex];
+            controller.setSpeed(speedArray[speedIndex]);
+        }
+        controller.setSpeed(getSpeed());
+    }
+
 
     public void collectSnow() {
     }
@@ -122,15 +145,15 @@ public class Player implements SnowCharacter {
         return berryAmount;
     }
 
-    public int getDamage() {
-        return damage;
-    }
-
     public int getHealth() {
         return healthPoint;
     }
 
     public void setHealth(int healthPoint) {
         this.healthPoint = healthPoint;
+    }
+
+    public Controller getController() {
+        return controller;
     }
 }

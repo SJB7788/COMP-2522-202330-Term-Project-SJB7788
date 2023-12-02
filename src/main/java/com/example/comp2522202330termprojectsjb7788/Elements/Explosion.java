@@ -47,11 +47,21 @@ public class Explosion {
 
     }
 
-    public void checkCollisionBlock(ArrayList<Snowblock> snowBlocks) {
+    public void checkCollisionSnowblock(ArrayList<Snowblock> snowBlocks) {
         for (Snowblock snowBlock : snowBlocks) {
             for (Node explosion : explosionGroup.getChildren()) {
                 if (explosion.getBoundsInParent().intersects(snowBlock.getBlock().getBoundsInParent())) {
                     snowBlock.decreaseDurability(damage);
+                }
+            }
+        }
+    }
+
+    public void checkCollisionBerryBlock(ArrayList<BerryBlocks> berryBlocks) {
+        for (BerryBlocks berryBlock : berryBlocks) {
+            for (Node explosion : explosionGroup.getChildren()) {
+                if (explosion.getBoundsInParent().intersects(berryBlock.getBlock().getBoundsInParent())) {
+                    berryBlock.decreaseDurability(damage);
                 }
             }
         }

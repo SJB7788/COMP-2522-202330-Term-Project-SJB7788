@@ -63,8 +63,6 @@ public class GameLoop extends Application {
         scene.setFill(Color.ANTIQUEWHITE);
 
         Grid grid = new Grid();
-        Rectangle test = new Rectangle(640, 1160, 40, 40);
-        test.setFill(Color.CHOCOLATE);
 
         //load maps
         Map map = new Map("./maps/map 2.txt");
@@ -74,6 +72,7 @@ public class GameLoop extends Application {
         grid.placeStoneBlocks(root);
         grid.placeSnowBlocks(root);
         grid.placeFinishBlocks(root);
+        grid.placeBerryBlocks(root);
         grid.placeEnemyBlocks(root);
 
         // add player rectangle
@@ -88,7 +87,6 @@ public class GameLoop extends Application {
         score.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         score.setFill(Color.WHITE);
         new AnimationTimer() {
-            int scoreCount = 0;
             @Override
             public void handle(long timestamp) {
                 for (Snowblock snowblock : Grid.snowBlocks) {
@@ -96,9 +94,16 @@ public class GameLoop extends Application {
                         Item item = snowblock.getItem();
                         if (player.getBoundsInParent().intersects(item.getItemRect().getBoundsInParent())) {
                             item.useItem(playerObj);
-                            scoreCount = playerObj.getBerryAmount();
-                            score.setText("Berries Collected: " + scoreCount);
                         }
+                    }
+                }
+
+                for (BerryBlocks berryblock : Grid.berryBlocks) {
+                    if (player.getBoundsInParent().intersects(berryblock.getBerry().getItemRect().getBoundsInParent())) {
+                        playerObj.collectBerry();
+                        score.setText("Berries Collected: " + playerObj.getBerryAmount());
+                        berryblock.getBerry().getItemRect().setX(-50);
+                        berryblock.getBerry().getItemRect().setY(-50);
                     }
                 }
 
@@ -167,10 +172,9 @@ public class GameLoop extends Application {
 //                }
 //            }
 //        });
-        test.toFront();
 
         // add rectangle to root
-        root.getChildren().addAll(player, score, test);
+        root.getChildren().addAll(player, score);
 
         stage.setScene(scene);
     }

@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Enemy implements EnemyCharacter {
-    private int SPEED = 5;
+    private int SPEED = 2;
     private final int damage;
     private int healthPoint;
     private final Rectangle body;

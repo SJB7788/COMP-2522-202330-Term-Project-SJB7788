@@ -2,6 +2,7 @@ package com.example.comp2522202330termprojectsjb7788.Elements;
 
 import com.example.comp2522202330termprojectsjb7788.enums.Directions;
 import com.example.comp2522202330termprojectsjb7788.interfaces.Block;
+import com.example.comp2522202330termprojectsjb7788.interfaces.Item;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
@@ -15,6 +16,7 @@ public class Grid {
     public static final ArrayList<Snowblock> snowBlocks = new ArrayList<>();
     public static final ArrayList<Stoneblock> stoneBlocks = new ArrayList<>();
     public static final ArrayList<Finishblock> finishBlocks = new ArrayList<>();
+    public static final ArrayList<BerryBlocks> berryBlocks = new ArrayList<>();
     public static final ArrayList<Enemy> enemies = new ArrayList<>();
     public static final ArrayList<Map> maps = new ArrayList<>();
     public static StartingBlock startingBlock;
@@ -53,14 +55,10 @@ public class Grid {
 
         // 25% chance of item in a block
         if (randomNumber == 1) {
-            // will make a list of items instead of just berries
-            // berries will most likely be in another method where it will randomly choose blocks with no items
-            // and place them there instead of this like to make sure that the amount of berries in the game
-            // is the amount needed to win
-            Berry berry = new Berry(1, snowblock.getXAxis() + ((GRID_WIDTH - 30) / 2),
+            Item item = random.nextInt(2) + 1 == 1 ? new DamageItem(1, snowblock.getXAxis() + ((GRID_WIDTH - 30) / 2),
+                    snowblock.getYAxis() + ((GRID_WIDTH - 30) / 2), 30) : new SpeedItem(1, snowblock.getXAxis() + ((GRID_WIDTH - 30) / 2),
                     snowblock.getYAxis() + ((GRID_WIDTH - 30) / 2), 30);
-            snowblock.addItem(berry);
-            System.out.println("added item");
+            snowblock.addItem(item);
         }
         snowBlocks.add(snowblock);
     }
@@ -116,6 +114,17 @@ public class Grid {
             throw new NullPointerException("Starting block is null");
         }
         pane.getChildren().add(startingBlock.getBlock());
+    }
+
+    public static void setBerryBlocks(int xAxis, int yAxis) {
+        BerryBlocks berryBlock = new BerryBlocks(xAxis, yAxis);
+        berryBlocks.add(berryBlock);
+    }
+
+    public void placeBerryBlocks(Pane pane) {
+        for (BerryBlocks berryBlock : berryBlocks) {
+            pane.getChildren().add(berryBlock.getBlock());
+        }
     }
 
     public static int getGridWidth() {

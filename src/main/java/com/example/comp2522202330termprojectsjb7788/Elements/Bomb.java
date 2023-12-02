@@ -56,7 +56,8 @@ public class Bomb implements Block {
                     // make explosion visible and remove bomb when 2 seconds has passed
                     root.getChildren().add(explosionGroup);
                     // check for collision with snowblocks
-                    explosion.checkCollisionBlock(Grid.snowBlocks);
+                    explosion.checkCollisionSnowblock(Grid.snowBlocks);
+                    explosion.checkCollisionBerryBlock(Grid.berryBlocks);
                     explosion.checkCollisionPlayer(player);
                     explosion.checkCollisionEnemy(Grid.enemies);
                     root.getChildren().remove(bomb);

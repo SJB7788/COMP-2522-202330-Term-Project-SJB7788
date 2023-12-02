@@ -1,32 +1,20 @@
 package com.example.comp2522202330termprojectsjb7788.Elements;
 
-import com.example.comp2522202330termprojectsjb7788.interfaces.Character;
 import com.example.comp2522202330termprojectsjb7788.interfaces.Item;
 import com.example.comp2522202330termprojectsjb7788.interfaces.SnowCharacter;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Berry implements Item {
+public class DamageItem implements Item {
     private final int itemAmount;
-    private final Rectangle berry;
 
-    public Berry(int itemAmount, int xAxis, int yAxis, int size) {
+    private final Rectangle damageItem;
+
+    public DamageItem(int itemAmount, int xAxis, int yAxis, int size) {
         this.itemAmount = itemAmount;
-        this.berry = new Rectangle(xAxis, yAxis, size, size);
-        berry.setFill(Color.YELLOW);
-    }
-
-    @Override
-    public void placeItem(Pane root) {
-        root.getChildren().add(berry);
-    }
-
-    @Override
-    public void useItem(SnowCharacter character) {
-        character.collectBerry();
-        berry.setY(-50);
-        berry.setX(-50);
+        this.damageItem = new Rectangle(xAxis, yAxis, size, size);
+        damageItem.setFill(Color.SILVER);
     }
 
     @Override
@@ -35,8 +23,19 @@ public class Berry implements Item {
     }
 
     @Override
-    public Rectangle getItemRect() {
-        return berry;
+    public void useItem(SnowCharacter character) {
+        character.setDamage(character.getDamage() + 4);
+        damageItem.setY(-50);
+        damageItem.setX(-50);
     }
 
+    @Override
+    public void placeItem(Pane root) {
+        root.getChildren().add(damageItem);
+    }
+
+    @Override
+    public Rectangle getItemRect() {
+        return damageItem;
+    }
 }
