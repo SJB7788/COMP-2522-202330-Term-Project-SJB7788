@@ -4,6 +4,7 @@ import com.example.comp2522202330termprojectsjb7788.Elements.Enemy;
 import com.example.comp2522202330termprojectsjb7788.Elements.Grid;
 import com.example.comp2522202330termprojectsjb7788.enums.Directions;
 import com.example.comp2522202330termprojectsjb7788.interfaces.Block;
+import javafx.animation.AnimationTimer;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -15,14 +16,16 @@ import java.util.Objects;
 public class Controller {
     private final Rectangle player;
     private int speed;
-    final double minX = 0;
-    final double maxX = 800;
-    final DoubleProperty rectangleVelocity = new SimpleDoubleProperty();
-    final LongProperty lastUpdateTime = new SimpleLongProperty();
+    private boolean isMovingUp = false;
+    private boolean isMovingDown = false;
+    private boolean isMovingLeft = false;
+    private boolean isMovingRight = false;
+    private AnimationTimer animationTimer;
 
     public Controller(Rectangle player, int speed) {
         this.player = player;
         this.speed = speed;
+        startAnimationTimer();
     }
 
     public void moveUp() {
@@ -63,6 +66,47 @@ public class Controller {
                 }
             }
         }
+    }
+
+    private void startAnimationTimer() {
+        animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long timestamp) {
+                if (isMovingRight) {
+                    moveRight();
+                }
+                if (isMovingLeft) {
+                    moveLeft();
+                }
+                if (isMovingUp) {
+                    moveUp();
+                }
+                if (isMovingDown) {
+                    moveDown();
+                }
+            }
+        };
+        animationTimer.start();
+    }
+
+    public void stopAnimationTimer() {
+        animationTimer.stop();
+    }
+
+    public void setMovingUp(boolean movingUp) {
+        isMovingUp = movingUp;
+    }
+
+    public void setMovingDown(boolean movingDown) {
+        isMovingDown = movingDown;
+    }
+
+    public void setMovingLeft(boolean movingLeft) {
+        isMovingLeft = movingLeft;
+    }
+
+    public void setMovingRight(boolean movingRight) {
+        isMovingRight = movingRight;
     }
 
     public void detectEnemyCollision(Enemy enemy) {

@@ -17,7 +17,7 @@ public class Player implements SnowCharacter {
     private int healthPoint;
     private int damage;
     private int speed;
-    private final int[] speedArray;
+    private final int[] speedArray = {2, 4, 8, 10, 20};
     private int speedIndex;
     private int snowAmount;
     private int berryAmount;
@@ -32,7 +32,6 @@ public class Player implements SnowCharacter {
         this.berryAmount = berryAmount;
         this.allowMovement = 1;
         speedIndex = 0;
-        speedArray = new int[]{8, 10, 20};
         this.speed = speedArray[speedIndex];
         controller = new Controller(player, speed);
     }
@@ -40,11 +39,20 @@ public class Player implements SnowCharacter {
     public void move(Directions direction) {
         if (allowMovement == 1) {
             switch (direction) {
-                case UP -> controller.moveUp();
-                case DOWN -> controller.moveDown();
-                case LEFT -> controller.moveLeft();
-                case RIGHT -> controller.moveRight();
+                case UP -> controller.setMovingUp(true);
+                case DOWN -> controller.setMovingDown(true);
+                case LEFT -> controller.setMovingLeft(true);
+                case RIGHT -> controller.setMovingRight(true);
             }
+        }
+    }
+
+    public void stopMove(Directions direction) {
+        switch (direction) {
+            case UP -> controller.setMovingUp(false);
+            case DOWN -> controller.setMovingDown(false);
+            case LEFT -> controller.setMovingLeft(false);
+            case RIGHT -> controller.setMovingRight(false);
         }
     }
 
@@ -58,11 +66,13 @@ public class Player implements SnowCharacter {
     public int getSpeed() {
         return speed;
     }
-    public void setSpeed(int speed) {
-        if (speedIndex < 2) {
+    public void incSpeed() {
+        if (speedIndex < 4) {
             speedIndex++;
             this.speed = speedArray[speedIndex];
             controller.setSpeed(speedArray[speedIndex]);
+            getPlayer().setX((int) Math.round(player.getX() / speed) * speed);
+            getPlayer().setY((int) Math.round(player.getY() / speed) * speed);
         }
         controller.setSpeed(getSpeed());
     }

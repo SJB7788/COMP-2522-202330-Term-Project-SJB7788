@@ -2,12 +2,18 @@ package com.example.comp2522202330termprojectsjb7788;
 
 import com.example.comp2522202330termprojectsjb7788.Elements.*;
 import com.example.comp2522202330termprojectsjb7788.enums.Directions;
+import com.example.comp2522202330termprojectsjb7788.interfaces.Block;
 import com.example.comp2522202330termprojectsjb7788.interfaces.Item;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -17,6 +23,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class GameLoop extends Application {
 
     private boolean gameWon = false;
@@ -24,6 +32,11 @@ public class GameLoop extends Application {
     private boolean isAtFinishBlock = false;
     private HelloController controller;
     private Stage stage;
+    private Rectangle player;
+    boolean isMovingUp = false;
+    boolean isMovingDown = false;
+    boolean isMovingLeft = false;
+    boolean isMovingRight = false;
 
     @Override
     public void start(Stage stage) {
@@ -76,7 +89,7 @@ public class GameLoop extends Application {
         grid.placeEnemyBlocks(root);
 
         // add player rectangle
-        Rectangle player = new Rectangle(Grid.startingBlock.getBlock().getX(), Grid.startingBlock.getBlock().getY(), 40, 40);
+        player = new Rectangle(Grid.startingBlock.getBlock().getX(), Grid.startingBlock.getBlock().getY(), 40, 40);
         player.setFill(Color.YELLOW);
         Player playerObj = new Player(player, 50, 4, 0, 0);
 
@@ -174,9 +187,7 @@ public class GameLoop extends Application {
             @Override
             public void handle(KeyEvent keyEvent) {
                 switch (keyEvent.getCode()) {
-                    case W -> {
-                        playerObj.move(Directions.UP);
-                    }
+                    case W -> playerObj.move(Directions.UP);
                     case S -> playerObj.move(Directions.DOWN);
                     case D -> playerObj.move(Directions.RIGHT);
                     case A -> playerObj.move(Directions.LEFT);
@@ -191,23 +202,50 @@ public class GameLoop extends Application {
             }
         });
 
-//        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-//            @Override
-//            public void handle(KeyEvent keyEvent) {
-//                switch (keyEvent.getCode()) {
-//                    case W -> {
-//                        player1.move(Directions.UP);
-//                    }
-//                    case S -> player1.move(Directions.DOWN);
-//                    case D -> player1.move(Directions.RIGHT);
-//                    case A -> player1.move(Directions.LEFT);
-//                }
-//            }
-//        });
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.A) {
+                    playerObj.stopMove(Directions.LEFT);
+                }
+                if (event.getCode() == KeyCode.D) {
+                    playerObj.stopMove(Directions.RIGHT);
+                }
+                if (event.getCode() == KeyCode.W) {
+                    playerObj.stopMove(Directions.UP);
+                }
+                if (event.getCode() == KeyCode.S) {
+                    playerObj.stopMove(Directions.DOWN);
+                }
+            }
+        });
 
         // add rectangle to root
         root.getChildren().addAll(player, score, healthStat, damageStat);
 
         stage.setScene(scene);
     }
+
+    private AnimationTimer getAnimationTimer() {
+        Controller controller = new Controller(player, 2);
+        AnimationTimer rectangleAnimation = new AnimationTimer() {
+            @Override
+            public void handle(long timestamp) {
+                if (isMovingRight) {
+                    controller.moveRight();
+                }
+                if (isMovingLeft) {
+                    controller.moveLeft();
+                }
+                if (isMovingUp) {
+                    controller.moveUp();
+                }
+                if (isMovingDown) {
+                    controller.moveDown();
+                }
+            }
+        };
+        return rectangleAnimation;
+    }
 }
+

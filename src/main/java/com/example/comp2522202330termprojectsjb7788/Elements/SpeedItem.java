@@ -23,7 +23,7 @@ public class SpeedItem implements Item {
 
     @Override
     public void useItem(SnowCharacter character) {
-        character.setSpeed(character.getSpeed() + 5);
+        character.incSpeed();
         speedItem.setY(-50);
         speedItem.setX(-50);
     }

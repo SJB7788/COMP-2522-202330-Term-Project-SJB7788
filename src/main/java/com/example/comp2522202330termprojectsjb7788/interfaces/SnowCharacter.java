@@ -11,7 +11,7 @@ public interface SnowCharacter extends Character {
     int chargeSnow(Pane root);
     void collectBerry();
 
-    void setSpeed(int speed);
+    void incSpeed();
     void setDamage(int damage);
     int getSpeed();
     int getDamage();
