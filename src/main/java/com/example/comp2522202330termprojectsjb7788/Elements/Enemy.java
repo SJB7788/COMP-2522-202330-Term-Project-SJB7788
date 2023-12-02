@@ -38,7 +38,7 @@ public class Enemy implements EnemyCharacter {
 
     @Override
     public void move(Directions direction) {
-        new AnimationTimer() {
+        movementTimer = new AnimationTimer() {
             @Override
             public void handle(long timestamp) {
                 if (!detectCollision()) {
@@ -49,7 +49,12 @@ public class Enemy implements EnemyCharacter {
                     stop();
                 }
             }
-        }.start();
+        };
+        movementTimer.start();
+    }
+
+    public void stopMove() {
+        movementTimer.stop();
     }
 
     public boolean detectCollision() {

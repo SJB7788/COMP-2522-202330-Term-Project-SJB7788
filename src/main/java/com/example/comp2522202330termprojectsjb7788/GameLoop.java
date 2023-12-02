@@ -78,7 +78,7 @@ public class GameLoop extends Application {
         // add player rectangle
         Rectangle player = new Rectangle(Grid.startingBlock.getBlock().getX(), Grid.startingBlock.getBlock().getY(), 40, 40);
         player.setFill(Color.YELLOW);
-        Player playerObj = new Player(player, 10, 4, 0, 0);
+        Player playerObj = new Player(player, 50, 4, 0, 0);
 
         Text score = new Text();
         score.setX(10);
@@ -86,14 +86,46 @@ public class GameLoop extends Application {
         score.setText("Berries Collected: 0");
         score.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         score.setFill(Color.WHITE);
+
+        Text healthStat = new Text();
+        healthStat.setX(1000);
+        healthStat.setY(25);
+        healthStat.setText("Health: " + playerObj.getHealth());
+        healthStat.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        healthStat.setFill(Color.WHITE);
+
+        Text damageStat = new Text();
+        damageStat.setX(1150);
+        damageStat.setY(25);
+        damageStat.setText("Damage: " + playerObj.getDamage());
+        damageStat.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        damageStat.setFill(Color.WHITE);
+
+
         new AnimationTimer() {
             @Override
             public void handle(long timestamp) {
+                if (playerObj.getHealth() <= 0) {
+                    Text gameOver = new Text();
+                    gameOver.setText("GAME OVER");
+                    gameOver.setFont(Font.font("Arial", FontWeight.BOLD, 100));
+                    gameOver.setX(root.getWidth() / 2 - 100 * 2);
+                    gameOver.setY(root.getHeight() / 2);
+                    root.getChildren().add(gameOver);
+                    for (Enemy enemy : Grid.enemies) {
+                        enemy.stopMove();
+                    }
+                    stop();
+                }
+
+                healthStat.setText("Health: " + playerObj.getHealth());
+
                 for (Snowblock snowblock : Grid.snowBlocks) {
                     if (snowblock.doesContainsItem()) {
                         Item item = snowblock.getItem();
                         if (player.getBoundsInParent().intersects(item.getItemRect().getBoundsInParent())) {
                             item.useItem(playerObj);
+                            damageStat.setText("Damage: " + playerObj.getDamage());
                         }
                     }
                 }
@@ -174,7 +206,7 @@ public class GameLoop extends Application {
 //        });
 
         // add rectangle to root
-        root.getChildren().addAll(player, score);
+        root.getChildren().addAll(player, score, healthStat, damageStat);
 
         stage.setScene(scene);
     }

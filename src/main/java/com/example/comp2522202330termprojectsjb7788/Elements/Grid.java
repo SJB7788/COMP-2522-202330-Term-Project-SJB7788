@@ -92,7 +92,7 @@ public class Grid {
     }
 
     public static void setEnemyBlocks(int xAxis, int yAxis) {
-        Enemy enemy = new Enemy(10, 10, xAxis, yAxis);
+        Enemy enemy = new Enemy(5, 10, xAxis, yAxis);
         enemies.add(enemy);
     }
 
