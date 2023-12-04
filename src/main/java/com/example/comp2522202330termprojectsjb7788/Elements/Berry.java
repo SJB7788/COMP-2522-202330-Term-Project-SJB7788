@@ -10,15 +10,25 @@ import javafx.scene.shape.Rectangle;
 public class Berry implements Item {
     private final int itemAmount;
     private final Rectangle berry;
+    private int xAxis;
+    private int yAxis;
 
     public Berry(int itemAmount, int xAxis, int yAxis, int size) {
         this.itemAmount = itemAmount;
-        this.berry = new Rectangle(xAxis, yAxis, size, size);
+        this.xAxis = xAxis;
+        this.yAxis = yAxis;
+        this.berry = new Rectangle(-150, -150, size, size);
         berry.setFill(Color.YELLOW);
+    }
+
+    private void setBerryLocation() {
+        berry.setX(xAxis);
+        berry.setY(yAxis);
     }
 
     @Override
     public void placeItem(Pane root) {
+        setBerryLocation();
         root.getChildren().add(berry);
     }
 

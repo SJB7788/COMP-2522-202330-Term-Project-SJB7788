@@ -42,7 +42,7 @@ public class Map {
     public void loadMap() {
         for (int currHeight = 0; currHeight < HEIGHT; currHeight++) {
             for (int currWidth = 0; currWidth < WIDTH; currWidth++) {
-                if (map[currHeight][currWidth] == 6) {
+                if (map[currHeight][currWidth] == 3) {
                     Grid.setBerryBlocks(currWidth * Grid.GRID_WIDTH, currHeight * Grid.GRID_HEIGHT);
                 }
                 else if (map[currHeight][currWidth] == 5) {
@@ -51,7 +51,7 @@ public class Map {
                 else if (map[currHeight][currWidth] == 4) {
                     Grid.setEnemyBlocks(currWidth * Grid.GRID_WIDTH, currHeight * Grid.GRID_HEIGHT);
                 }
-                else if (map[currHeight][currWidth] == 3) {
+                else if (map[currHeight][currWidth] == 6) {
                     Grid.setFinishBlocks(currWidth * Grid.GRID_WIDTH, currHeight * Grid.GRID_HEIGHT);
                     Grid.blocks.add(Grid.finishBlocks.get(Grid.finishBlocks.size() - 1));
                 }

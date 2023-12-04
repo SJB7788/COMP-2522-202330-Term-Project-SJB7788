@@ -68,7 +68,7 @@ public class Controller {
         }
     }
 
-    private void startAnimationTimer() {
+    public void startAnimationTimer() {
         animationTimer = new AnimationTimer() {
             @Override
             public void handle(long timestamp) {

@@ -56,6 +56,13 @@ public class Player implements SnowCharacter {
         }
     }
 
+    public void stopControllerAnimation() {
+        controller.stopAnimationTimer();
+    }
+    public void startControllerAnimation() {
+        controller.startAnimationTimer();
+    }
+
     public int getDamage() {
         return damage;
     }
