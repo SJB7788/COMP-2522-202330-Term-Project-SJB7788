@@ -107,25 +107,23 @@ public class Player implements SnowCharacter {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             int timerCount = 0;
+            final Rectangle chargeSquareOne = new Rectangle(player.getX() - 60, player.getY() - 20, 160, 80);
+            final Rectangle chargeSquareTwo = new Rectangle(player.getX() - 300, player.getY() - 140, 640, 320);
+            final Rectangle chargeSquareThree = new Rectangle(player.getX() - 620, player.getY() - 300, 1280, 640);
 
             @Override
             public void handle(ActionEvent event) {
-                timerCount++;
-
-                Rectangle chargeSquareOne = new Rectangle(player.getX() - 60, player.getY() - 20, 160, 80);
                 chargeSquareOne.setFill(Color.LIGHTCYAN);
-
-                Rectangle chargeSquareTwo = new Rectangle(player.getX() - 300, player.getY() - 140, 640, 320);
                 chargeSquareTwo.setFill(Color.LIGHTBLUE);
-
-                Rectangle chargeSquareThree = new Rectangle(player.getX() - 620, player.getY() - 300, 1280, 640);
                 chargeSquareThree.setFill(Color.BLUE);
-
-                root.getChildren().addAll(chargeSquareThree, chargeSquareTwo, chargeSquareOne);
 
                 chargeSquareOne.setOpacity(0);
                 chargeSquareTwo.setOpacity(0);
                 chargeSquareThree.setOpacity(0);
+                if (timerCount == 0) {
+                    root.getChildren().addAll(chargeSquareThree, chargeSquareTwo, chargeSquareOne);
+                }
+                timerCount++;
 
                 if (timerCount == 1) {
                     chargeSquareOne.setOpacity(1);
@@ -135,7 +133,6 @@ public class Player implements SnowCharacter {
                     player.toFront();
                 } else if (timerCount == 3) {
                     chargeSquareThree.setOpacity(1);
-                    player.toFront();
                 } else if (timerCount == 4) {
                     chargeSquareOne.setOpacity(0);
                     chargeSquareTwo.setOpacity(0);
