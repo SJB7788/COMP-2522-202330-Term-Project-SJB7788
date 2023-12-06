@@ -28,6 +28,7 @@ public class GameLoop extends Application {
     private boolean gamePaused = false;
     private boolean isAtFinishBlock = false;
     private HelloController helloController;
+    private String mapFile;
     private Stage stage;
     private Rectangle player;
     private final Pane gameRoot = new Pane();
@@ -68,13 +69,15 @@ public class GameLoop extends Application {
     }
 
     public void showGameScreen() {
-
         gameScene.setFill(Color.ANTIQUEWHITE);
 
         Grid grid = new Grid();
 
         //load maps
-        Map map = new Map("./maps/map 2.txt");
+        if (mapFile == null) {
+            mapFile = "map1.txt";
+        }
+        Map map = new Map("./maps/" + mapFile);
         map.loadMap();
 
         grid.placeStartingBlock(gameRoot);
@@ -237,6 +240,10 @@ public class GameLoop extends Application {
         gameRoot.getChildren().addAll(player, score, healthStat, damageStat);
 
         stage.setScene(gameScene);
+    }
+
+    public void setMapFile(String mapFile) {
+        this.mapFile = mapFile;
     }
 
     private void showPauseScreen(boolean isPaused, Button resumeButton, Button restartButton, Button exitButton) {

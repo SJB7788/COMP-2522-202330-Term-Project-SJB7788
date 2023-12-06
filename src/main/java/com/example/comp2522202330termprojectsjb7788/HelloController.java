@@ -1,21 +1,23 @@
 package com.example.comp2522202330termprojectsjb7788;
 
-import com.example.comp2522202330termprojectsjb7788.Elements.Player;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.File;
 
 public class HelloController {
     private GameLoop gameLoop;
-
     @FXML
     private Label welcomeText;
-
+    @FXML
+    private Pane startMapChoicePane;
+    @FXML
+    private ChoiceBox<String> startMapChoiceBox;
     @FXML
     private Pane tutorialOnePane;
     @FXML
@@ -32,8 +34,44 @@ public class HelloController {
 
     @FXML
     protected void onStartPlay() {
-        gameLoop.setStatus(true);
+        onStartMapChoice();
+        startMapChoicePane.setVisible(true);
+    }
+
+    @FXML
+    protected void onStartMapChoice() {
+        ObservableList<String> mapList = FXCollections.observableArrayList();
+
+        File mapDirectory = new File("./maps");
+        File[] mapFiles = mapDirectory.listFiles();
+        if (mapFiles != null) {
+            for (File mapFile : mapFiles) {
+                if (mapFile.isFile()) {
+                    mapList.add(mapFile.getName());
+                }
+            }
+        }
+        else {
+            System.out.println("No maps found");
+        }
+
+        startMapChoiceBox.setItems(mapList);
+    }
+
+    @FXML
+    protected void onStartMapChoiceSubmit() {
+        String selectedMap = startMapChoiceBox.getSelectionModel().getSelectedItem();
+        if (selectedMap == null) {
+            return;
+        }
+        gameLoop.setMapFile(selectedMap);
+        startMapChoicePane.setVisible(false);
         gameLoop.showGameScreen();
+    }
+
+    @FXML
+    protected void onStartMapChoiceClose() {
+        startMapChoicePane.setVisible(false);
     }
 
     @FXML
