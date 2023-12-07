@@ -167,6 +167,10 @@ public class Player implements SnowCharacter {
         this.healthPoint = healthPoint;
     }
 
+    public void setAllowMovement(int allowMovement) {
+        this.allowMovement = allowMovement;
+    }
+
     public Controller getController() {
         return controller;
     }

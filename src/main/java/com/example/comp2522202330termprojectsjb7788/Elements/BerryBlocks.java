@@ -1,13 +1,17 @@
 package com.example.comp2522202330termprojectsjb7788.Elements;
 
+import com.example.comp2522202330termprojectsjb7788.GameLoop;
 import com.example.comp2522202330termprojectsjb7788.interfaces.Block;
 import com.example.comp2522202330termprojectsjb7788.interfaces.Item;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class BerryBlocks implements Block {
     private final Rectangle berryBlock;
+    private ImageView berryBlockImage;
     private int durability = 1;
     private final Item berry;
     private final int x;
@@ -22,6 +26,16 @@ public class BerryBlocks implements Block {
 
         Berry berry = new Berry(1, x + 5, y + 5, 20);
         this.berry = berry;
+
+        berryBlockImage = new ImageView(new Image(GameLoop.class.getResource("wood.png").toString()));
+        berryBlockImage.setFitWidth(40);
+        berryBlockImage.setFitHeight(40);
+        berryBlockImage.setX(x);
+        berryBlockImage.setY(y);
+    }
+
+    public ImageView getBerryBlockImage() {
+        return berryBlockImage;
     }
 
     public Item getBerry() {
@@ -33,7 +47,7 @@ public class BerryBlocks implements Block {
         if (this.durability <= 0) {
             berryBlock.setX(-50);
             berryBlock.setY(-50);
-            berry.placeItem((Pane) berryBlock.getParent());
+            berry.placeItem((Pane) berryBlockImage.getParent());
         }
     }
 

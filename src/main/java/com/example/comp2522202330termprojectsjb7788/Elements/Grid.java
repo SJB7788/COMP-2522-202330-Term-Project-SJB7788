@@ -65,7 +65,7 @@ public class Grid {
 
     public void placeSnowBlocks(Pane pane) {
         for (Snowblock snowblock : snowBlocks) {
-            pane.getChildren().add(snowblock.getBlock());
+            pane.getChildren().add(snowblock.getSnowblockImage());
         }
     }
 
@@ -76,7 +76,7 @@ public class Grid {
 
     public void placeStoneBlocks(Pane pane) {
         for (Stoneblock stoneblock : stoneBlocks) {
-            pane.getChildren().add(stoneblock.getBlock());
+            pane.getChildren().add(stoneblock.getStoneblockImage());
         }
     }
 
@@ -113,7 +113,7 @@ public class Grid {
         if (startingBlock == null) {
             throw new NullPointerException("Starting block is null");
         }
-        pane.getChildren().add(startingBlock.getBlock());
+        pane.getChildren().add(startingBlock.getStartingBlockImage());
     }
 
     public static void setBerryBlocks(int xAxis, int yAxis) {
@@ -123,7 +123,7 @@ public class Grid {
 
     public void placeBerryBlocks(Pane pane) {
         for (BerryBlocks berryBlock : berryBlocks) {
-            pane.getChildren().add(berryBlock.getBlock());
+            pane.getChildren().add(berryBlock.getBerryBlockImage());
         }
     }
 

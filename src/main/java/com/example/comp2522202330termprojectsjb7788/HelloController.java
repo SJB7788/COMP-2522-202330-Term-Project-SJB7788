@@ -66,6 +66,7 @@ public class HelloController {
         }
         gameLoop.setMapFile(selectedMap);
         startMapChoicePane.setVisible(false);
+        gameLoop.setStatus(true);
         gameLoop.showGameScreen();
     }
 

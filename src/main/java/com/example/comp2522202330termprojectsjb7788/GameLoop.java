@@ -10,6 +10,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -77,8 +79,13 @@ public class GameLoop extends Application {
         if (mapFile == null) {
             mapFile = "map1.txt";
         }
+
         Map map = new Map("./maps/" + mapFile);
         map.loadMap();
+
+        ImageView background = new ImageView(new Image(GameLoop.class.getResource("snow.png").toString()));
+        background.setFitWidth(1280);
+        background.setFitHeight(720);
 
         grid.placeStartingBlock(gameRoot);
         grid.placeStoneBlocks(gameRoot);
@@ -86,6 +93,7 @@ public class GameLoop extends Application {
         grid.placeFinishBlocks(gameRoot);
         grid.placeBerryBlocks(gameRoot);
         grid.placeEnemyBlocks(gameRoot);
+
 
         // add player rectangle
         player = new Rectangle(Grid.startingBlock.getBlock().getX(), Grid.startingBlock.getBlock().getY(), 40, 40);
@@ -193,6 +201,10 @@ public class GameLoop extends Application {
                         case L -> {
                             if (isAtFinishBlock) {
                                 playerObj.chargeSnow(gameRoot);
+                                for (Enemy enemy : Grid.enemies) {
+                                    enemy.stopMove();
+                                }
+                                playerObj.setAllowMovement(0);
                                 gameStatus = false;
                                 gameWon = true;
                             }
@@ -237,9 +249,10 @@ public class GameLoop extends Application {
         });
 
         // add rectangle to root
-        gameRoot.getChildren().addAll(player, score, healthStat, damageStat);
+        gameRoot.getChildren().addAll(player, score, healthStat, damageStat, background);
 
         stage.setScene(gameScene);
+        background.toBack();
     }
 
     public void setMapFile(String mapFile) {
