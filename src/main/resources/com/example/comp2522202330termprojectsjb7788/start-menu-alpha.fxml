@@ -169,7 +169,7 @@
                   <Font name="Gulim" size="20.0" />
                </font>
             </Text>
-            <Text layoutX="35.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Once you collect all six, somewhere on the map, there will be an area with Golden blocks. Go there and unleash your finish skill to beat the game!" wrappingWidth="457.13671875">
+            <Text layoutX="35.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Once you collect all six, go to the Golden blocks and unleash your finishing skill to beat the game!" wrappingWidth="457.13671875">
                <font>
                   <Font name="Gulim" size="20.0" />
                </font>
@@ -199,7 +199,7 @@
                   <Image url="@potion.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="520.0" layoutY="178.0">
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="520.0" layoutY="194.0">
                <image>
                   <Image url="@Gold_Block.png" />
                </image>

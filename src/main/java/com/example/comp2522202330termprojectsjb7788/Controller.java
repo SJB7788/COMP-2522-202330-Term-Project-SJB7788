@@ -44,14 +44,12 @@ public class Controller {
     public void moveLeft() {
         player.setX(player.getX() - speed);
         playerObj.showPlayerImage(1);
-        playerObj.hidePlayerImage(0);
         detectCollisionBlock(0, -40, 40, -40, Directions.LEFT);
     }
 
     public void moveRight() {
         player.setX(player.getX() + speed);
         playerObj.showPlayerImage(0);
-        playerObj.hidePlayerImage(1);
         detectCollisionBlock(40, 0, 40, -40, Directions.RIGHT);
     }
 

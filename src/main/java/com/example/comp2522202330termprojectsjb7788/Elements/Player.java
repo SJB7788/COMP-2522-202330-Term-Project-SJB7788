@@ -44,12 +44,13 @@ public class Player implements SnowCharacter {
 
         playerImageLeft = new ImageView(new Image(GameLoop.class.getResource("character 1.png").toString()));
         playerImageRight = new ImageView(new Image(GameLoop.class.getResource("character 2.png").toString()));
-        playerImageLeft.setFitWidth(40);
-        playerImageLeft.setFitHeight(40);
-        playerImageRight.setFitWidth(40);
-        playerImageRight.setFitHeight(40);
+        playerImageLeft.setFitWidth(42);
+        playerImageLeft.setFitHeight(42);
+        playerImageRight.setFitWidth(42);
+        playerImageRight.setFitHeight(42);
 
         followPlayerRectangle();
+        showPlayerImage(1);
     }
 
     public void move(Directions direction) {
@@ -100,16 +101,10 @@ public class Player implements SnowCharacter {
     public void showPlayerImage(int index) {
         if (index == 1) {
             playerImageLeft.visibleProperty().setValue(true);
+            playerImageRight.visibleProperty().setValue(false);
         } else {
             playerImageRight.visibleProperty().setValue(true);
-        }
-    }
-
-    public void hidePlayerImage(int index) {
-        if (index == 1) {
             playerImageLeft.visibleProperty().setValue(false);
-        } else {
-            playerImageRight.visibleProperty().setValue(false);
         }
     }
 
