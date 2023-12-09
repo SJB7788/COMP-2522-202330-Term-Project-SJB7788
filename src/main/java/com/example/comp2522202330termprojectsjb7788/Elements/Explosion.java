@@ -2,6 +2,7 @@ package com.example.comp2522202330termprojectsjb7788.Elements;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
@@ -25,24 +26,29 @@ public class Explosion {
 
     public void makeExplosionArea() {
         Rectangle initialExplosion = new Rectangle(xAxis, yAxis, size, size);
+        initialExplosion.setFill(Color.WHITE);
         explosionGroup.getChildren().add(initialExplosion);
 
         // left side of the explosion
         Rectangle explosionXRIGHT = new Rectangle(xAxis + size, yAxis,
                 ((size + 10) * ((double) explosionRadius)), size);
+        explosionXRIGHT.setFill(Color.WHITE);
 
         // right side of the explosion
         Rectangle explosionXLEFT = new Rectangle(xAxis - ((size + 10) * ((double) explosionRadius)), yAxis,
                 ((size + 10) * ((double) explosionRadius)), size);
+        explosionXLEFT.setFill(Color.WHITE);
         explosionGroup.getChildren().addAll(explosionXLEFT, explosionXRIGHT);
 
         // top side of the explosion
         Rectangle explosionYDOWN = new Rectangle(xAxis, yAxis + size,
                 size, ((size + 10) * ((double) explosionRadius)));
+        explosionYDOWN.setFill(Color.WHITE);
 
         // bottom side of the explosion
         Rectangle explosionYUP = new Rectangle(xAxis, yAxis - ((size + 10) * ((double) explosionRadius)),
                 size, ((size + 10) * ((double) explosionRadius)));
+        explosionYUP.setFill(Color.WHITE);
         explosionGroup.getChildren().addAll(explosionYDOWN, explosionYUP);
 
     }

@@ -87,7 +87,7 @@ public class Grid {
 
     public void placeFinishBlocks(Pane pane) {
         for (Finishblock finishblock : finishBlocks) {
-            pane.getChildren().add(finishblock.getBlock());
+            pane.getChildren().addAll(finishblock.getBlock(), finishblock.getFinishblockImage());
         }
     }
 
@@ -100,7 +100,7 @@ public class Grid {
         Random random = new Random();
         for (Enemy enemy : enemies) {
             Directions enemyDirection = (random.nextInt(2) + 1 == 1) ? Directions.RIGHT : Directions.LEFT;
-            pane.getChildren().add(enemy.getBody());
+            pane.getChildren().add(enemy.getEnemyImage());
             enemy.move(enemyDirection);
         }
     }

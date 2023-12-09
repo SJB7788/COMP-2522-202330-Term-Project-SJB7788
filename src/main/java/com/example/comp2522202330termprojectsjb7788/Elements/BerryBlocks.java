@@ -24,8 +24,7 @@ public class BerryBlocks implements Block {
         berryBlock.setFill(Color.PURPLE);
         this.berryBlock = berryBlock;
 
-        Berry berry = new Berry(1, x + 5, y + 5, 20);
-        this.berry = berry;
+        this.berry = new Berry(1, x + 5, y + 5, 20);
 
         berryBlockImage = new ImageView(new Image(GameLoop.class.getResource("wood.png").toString()));
         berryBlockImage.setFitWidth(40);
@@ -47,6 +46,8 @@ public class BerryBlocks implements Block {
         if (this.durability <= 0) {
             berryBlock.setX(-50);
             berryBlock.setY(-50);
+            berryBlockImage.setX(-50);
+            berryBlockImage.setY(-50);
             berry.placeItem((Pane) berryBlockImage.getParent());
         }
     }

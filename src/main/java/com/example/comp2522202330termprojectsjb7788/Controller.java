@@ -2,6 +2,7 @@ package com.example.comp2522202330termprojectsjb7788;
 
 import com.example.comp2522202330termprojectsjb7788.Elements.Enemy;
 import com.example.comp2522202330termprojectsjb7788.Elements.Grid;
+import com.example.comp2522202330termprojectsjb7788.Elements.Player;
 import com.example.comp2522202330termprojectsjb7788.enums.Directions;
 import com.example.comp2522202330termprojectsjb7788.interfaces.Block;
 import javafx.animation.AnimationTimer;
@@ -15,6 +16,7 @@ import java.util.Objects;
 
 public class Controller {
     private final Rectangle player;
+    private final Player playerObj;
     private int speed;
     private boolean isMovingUp = false;
     private boolean isMovingDown = false;
@@ -22,8 +24,9 @@ public class Controller {
     private boolean isMovingRight = false;
     private AnimationTimer animationTimer;
 
-    public Controller(Rectangle player, int speed) {
+    public Controller(Rectangle player, Player playerObj, int speed) {
         this.player = player;
+        this.playerObj = playerObj;
         this.speed = speed;
         startAnimationTimer();
     }
@@ -40,11 +43,15 @@ public class Controller {
 
     public void moveLeft() {
         player.setX(player.getX() - speed);
+        playerObj.showPlayerImage(1);
+        playerObj.hidePlayerImage(0);
         detectCollisionBlock(0, -40, 40, -40, Directions.LEFT);
     }
 
     public void moveRight() {
         player.setX(player.getX() + speed);
+        playerObj.showPlayerImage(0);
+        playerObj.hidePlayerImage(1);
         detectCollisionBlock(40, 0, 40, -40, Directions.RIGHT);
     }
 

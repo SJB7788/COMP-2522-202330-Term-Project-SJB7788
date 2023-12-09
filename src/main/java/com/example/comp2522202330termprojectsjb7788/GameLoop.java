@@ -5,7 +5,6 @@ import com.example.comp2522202330termprojectsjb7788.enums.Directions;
 import com.example.comp2522202330termprojectsjb7788.interfaces.Item;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -128,6 +127,7 @@ public class GameLoop extends Application {
                 if (playerObj.getHealth() <= 0) {
                     gameStatus = false;
                     playerObj.stopControllerAnimation();
+                    playerObj.stopFollowPlayerRectangle();
                     for (Enemy enemy : Grid.enemies) {
                         enemy.stopMove();
                     }
@@ -149,10 +149,8 @@ public class GameLoop extends Application {
 
                 for (BerryBlocks berryblock : Grid.berryBlocks) {
                     if (player.getBoundsInParent().intersects(berryblock.getBerry().getItemRect().getBoundsInParent())) {
-                        playerObj.collectBerry();
+                        berryblock.getBerry().useItem(playerObj);
                         score.setText("Berries Collected: " + playerObj.getBerryAmount());
-                        berryblock.getBerry().getItemRect().setX(-50);
-                        berryblock.getBerry().getItemRect().setY(-50);
                     }
                 }
 
@@ -214,6 +212,7 @@ public class GameLoop extends Application {
                             if (gamePaused) {
                                 showPauseScreen(gamePaused, resumeButton, restartButton, exitButton);
                                 playerObj.stopControllerAnimation();
+                                playerObj.stopFollowPlayerRectangle();
                                 for (Enemy enemy : Grid.enemies) {
                                     enemy.stopMove();
                                 }
@@ -249,7 +248,8 @@ public class GameLoop extends Application {
         });
 
         // add rectangle to root
-        gameRoot.getChildren().addAll(player, score, healthStat, damageStat, background);
+        gameRoot.getChildren().addAll(score, healthStat, damageStat, background, playerObj.getPlayerImage(1),
+                playerObj.getPlayerImage(0));
 
         stage.setScene(gameScene);
         background.toBack();

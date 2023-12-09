@@ -1,11 +1,14 @@
 package com.example.comp2522202330termprojectsjb7788.Elements;
 
+import com.example.comp2522202330termprojectsjb7788.GameLoop;
 import com.example.comp2522202330termprojectsjb7788.interfaces.Block;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -16,6 +19,7 @@ public class Bomb implements Block {
     private final Pane root;
     private final Player player;
     private Rectangle bomb;
+    private ImageView bombImage;
     private final int damage;
     private final int explosionRadius;
 
@@ -24,14 +28,19 @@ public class Bomb implements Block {
         this.explosionRadius = explosionRadius;
         this.root = root;
         this.player = player;
+
     }
 
     public void placeBomb() {
         int bombX = Grid.getGridPlacementX((int) player.getPlayer().getX());
         int bombY = Grid.getGridPlacementY((int) player.getPlayer().getY());
         bomb = new Rectangle(bombX, bombY, 40, 40);
-        bomb.setFill(Color.RED);
-        root.getChildren().add(bomb);
+        bombImage = new ImageView(new Image(GameLoop.class.getResource("ice bomb.png").toString()));
+        bombImage.setFitWidth(35);
+        bombImage.setFitHeight(40);
+        bombImage.setX(bombX);
+        bombImage.setY(bombY);
+        root.getChildren().addAll(bombImage);
         Grid.blocks.add(this);
     }
 
@@ -60,10 +69,12 @@ public class Bomb implements Block {
                     explosion.checkCollisionBerryBlock(Grid.berryBlocks);
                     explosion.checkCollisionPlayer(player);
                     explosion.checkCollisionEnemy(Grid.enemies);
-                    root.getChildren().remove(bomb);
+                    root.getChildren().remove(bombImage);
                     Grid.blocks.remove(Bomb.this);
                     bomb.setY(-50);
                     bomb.setX(-50);
+                    bombImage.setY(-50);
+                    bombImage.setX(-50);
                 }
                 if (timerCount == 3) {
                     // remove explosion when 3 seconds has passed

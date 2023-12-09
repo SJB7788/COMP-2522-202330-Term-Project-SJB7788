@@ -1,12 +1,16 @@
 package com.example.comp2522202330termprojectsjb7788.Elements;
 
 import com.example.comp2522202330termprojectsjb7788.Controller;
+import com.example.comp2522202330termprojectsjb7788.GameLoop;
 import com.example.comp2522202330termprojectsjb7788.enums.Directions;
 import com.example.comp2522202330termprojectsjb7788.interfaces.SnowCharacter;
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -14,6 +18,9 @@ import javafx.util.Duration;
 
 public class Player implements SnowCharacter {
     private final Rectangle player;
+    private final ImageView playerImageLeft;
+    private final ImageView playerImageRight;
+    private AnimationTimer movementTimer;
     private int healthPoint;
     private int damage;
     private int speed;
@@ -33,7 +40,16 @@ public class Player implements SnowCharacter {
         this.allowMovement = 1;
         speedIndex = 0;
         this.speed = speedArray[speedIndex];
-        controller = new Controller(player, speed);
+        controller = new Controller(player, this, speed);
+
+        playerImageLeft = new ImageView(new Image(GameLoop.class.getResource("character 1.png").toString()));
+        playerImageRight = new ImageView(new Image(GameLoop.class.getResource("character 2.png").toString()));
+        playerImageLeft.setFitWidth(40);
+        playerImageLeft.setFitHeight(40);
+        playerImageRight.setFitWidth(40);
+        playerImageRight.setFitHeight(40);
+
+        followPlayerRectangle();
     }
 
     public void move(Directions direction) {
@@ -56,9 +72,51 @@ public class Player implements SnowCharacter {
         }
     }
 
+    public void followPlayerRectangle() {
+        movementTimer = new AnimationTimer() {
+            @Override
+            public void handle(long timestamp) {
+                playerImageLeft.setX(player.getX());
+                playerImageLeft.setY(player.getY());
+                playerImageRight.setX(player.getX());
+                playerImageRight.setY(player.getY());
+            }
+        };
+
+        movementTimer.start();
+    }
+
+    public void stopFollowPlayerRectangle() {
+        movementTimer.stop();
+    }
+
+    public ImageView getPlayerImage(int index) {
+        if (index == 1) {
+            return playerImageLeft;
+        }
+        return playerImageRight;
+    }
+
+    public void showPlayerImage(int index) {
+        if (index == 1) {
+            playerImageLeft.visibleProperty().setValue(true);
+        } else {
+            playerImageRight.visibleProperty().setValue(true);
+        }
+    }
+
+    public void hidePlayerImage(int index) {
+        if (index == 1) {
+            playerImageLeft.visibleProperty().setValue(false);
+        } else {
+            playerImageRight.visibleProperty().setValue(false);
+        }
+    }
+
     public void stopControllerAnimation() {
         controller.stopAnimationTimer();
     }
+
     public void startControllerAnimation() {
         controller.startAnimationTimer();
     }
